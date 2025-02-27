@@ -1,17 +1,16 @@
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
-import { Home, Search, Bell, Mail, List, Bookmark, Users, Star, User, MoreHorizontal } from "lucide-react";
+import { Home, Search, Bell, Mail, Users, User, BadgeCheck,CircleEllipsis } from "lucide-react";
 
 const navigationItems = [
   { icon: Home, label: "Home", href: "/" },
   { icon: Search, label: "Explore", href: "/explore" },
   { icon: Bell, label: "Notifications", href: "/notifications" },
   { icon: Mail, label: "Messages", href: "/messages" },
-  { icon: Bookmark, label: "Bookmarks", href: "/bookmarks" },
   { icon: Users, label: "Communities", href: "/communities" },
-  { icon: Star, label: "Premium", href: "/premium" },
+  { icon: BadgeCheck, label: "Premium", href: "/premium" },
   { icon: User, label: "Profile", href: "/profile" },
-  { icon: MoreHorizontal, label: "More", href: "#" }
+  { icon: CircleEllipsis, label: "More", href: "#" }
 ];
 
 const Sidebar = () => {
