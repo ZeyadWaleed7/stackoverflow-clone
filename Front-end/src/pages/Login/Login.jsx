@@ -23,9 +23,9 @@ const Login = () => {
 
             <div className="sign-in-options">
               <button className="google-button">
-                <div className="button-content">
+                <div className="google-button-content">
                   <img src={googleIcon} alt="Google" className="profile-image" />
-                  <span>Sign in with Google</span>
+                  <span>Sign as Zeyad<br></br>ZeyadW1@gmail.com</span>
                 </div>
               </button>
 
@@ -52,9 +52,9 @@ const Login = () => {
 
               <p className="terms-text">
                 By signing up, you agree to the 
-                <Link to="/terms" className="terms-link">Terms of Service</Link> and 
-                <Link to="/privacy" className="terms-link">Privacy Policy</Link>, including 
-                <Link to="/cookies" className="terms-link">Cookie Use</Link>.
+                <Link to="#" className="terms-link">Terms of Service</Link> and 
+                <Link to="#" className="terms-link">Privacy Policy</Link>, including 
+                <Link to="#" className="terms-link">Cookie Use</Link>.
               </p>
             </div>
 
@@ -69,22 +69,24 @@ const Login = () => {
       </div>
 
       <footer className="footer">
-        <nav className="footer-nav">
-          <Link to="/about" className="footer-link">About</Link>
-          <Link to="/help" className="footer-link">Help Center</Link>
-          <Link to="/terms" className="footer-link">Terms of Service</Link>
-          <Link to="/privacy" className="footer-link">Privacy Policy</Link>
-          <Link to="/cookies" className="footer-link">Cookie Policy</Link>
-          <Link to="/accessibility" className="footer-link">Accessibility</Link>
-          <Link to="/ads" className="footer-link">Ads info</Link>
-          <Link to="/blog" className="footer-link">Blog</Link>
-          <Link to="/careers" className="footer-link">Careers</Link>
-          <Link to="/resources" className="footer-link">Brand Resources</Link>
-          <Link to="/marketing" className="footer-link">Marketing</Link>
-          <Link to="/business" className="footer-link">X for Business</Link>
-          <Link to="/developers" className="footer-link">Developers</Link>
-        </nav>
-        <p className="copyright">© 2025 Not Twitter Corp.</p>
+          <div className="footer-nav">
+            <Link to="#" className="footer-link">About</Link>
+            <Link to="#" className="footer-link">Help Center</Link>
+            <Link to="#" className="footer-link">Terms of Service</Link>
+            <Link to="#" className="footer-link">Privacy Policy</Link>
+            <Link to="#" className="footer-link">Cookie Policy</Link>
+            <Link to="#" className="footer-link">Accessibility</Link>
+            <Link to="#" className="footer-link">Ads info</Link>
+            <Link to="#" className="footer-link">Blog</Link>
+            <Link to="#" className="footer-link">Careers</Link>
+            <Link to="#" className="footer-link">Brand Resources</Link>
+            <Link to="#" className="footer-link">Marketing</Link>
+            <Link to="#" className="footer-link">X for Business</Link>
+            <Link to="#" className="footer-link">Developers</Link>
+          </div>
+          <div>
+            <p className="copyright">© 2025 Not Twitter Corp.</p>
+          </div>
       </footer>
     </div>
   );

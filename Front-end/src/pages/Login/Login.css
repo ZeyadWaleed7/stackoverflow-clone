@@ -46,7 +46,7 @@ body {
 }
 
 .form-container {
-  max-width: 28rem;
+  max-width: 500px;
 }
 
 .main-heading {
@@ -62,6 +62,7 @@ body {
 }
 
 .sign-in-options {
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
@@ -74,19 +75,30 @@ body {
   border-radius: 9999px;
   background-color: white;
   color: black;
-  font-weight: 500;
+  font-weight: bold;
   border: none;
   cursor: pointer;
 }
 
+.google-button{
+  margin-bottom: 10px;
+}
+
 .button-content {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.google-button-content {
+  text-align:left;
   display: flex;
   align-items: center;
 }
 
 .profile-image {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 24px;
+  height: 24px;
   margin-right: 0.5rem;
   border-radius: 50%;
   overflow: hidden;
@@ -117,16 +129,16 @@ body {
 }
 
 .apple-icon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 24px;
+  height: 24px;
   margin-right: 0.5rem;
 }
 
 .divider {
   display: flex;
   align-items: center;
-  margin-top:4px;
-  margin-bottom: 4px;
+  margin-top:8px;
+  margin-bottom: 8px;
 }
 
 .divider-line {
@@ -142,6 +154,7 @@ body {
 }
 
 .create-account-button {
+  margin-bottom: 8px;
   width: 100%;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
@@ -167,6 +180,7 @@ body {
 }
 
 .signin-section {
+  max-width: 400px;
   margin-top: 2.5rem;
 }
 
@@ -191,15 +205,18 @@ body {
 }
 
 .footer {
-  padding: 1rem 2rem;
-  border-top: 1px solid #1f2937;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  color: rgb(113, 118, 123);
+  padding: 24px 44px;
 }
 
 .footer-nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem 1rem;
+  gap: 28px;
 }
 
 .footer-link {
@@ -214,9 +231,8 @@ body {
 
 .copyright {
   text-align: center;
-  color: #6b7280;
   font-size: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 4px;
 }
 
 @media (min-width: 768px) {
@@ -232,4 +248,31 @@ body {
     width: 50%;
   }
 }
+
+
+@media screen and (max-width: 768px) {
+  .logo-container {
+    width: 150px;
+    height: 150px;
+  }
+  .footer-nav{
+     gap:16px;
+  }
+  .footer{
+    gap:20px;
+    flex-direction: column;
+  }
+  .main-heading{
+    font-size: 48px;
+    margin-bottom:18px
+  }
+  .form-section{
+    padding-top: 0;
+  }
+  .logo-section{
+    padding-bottom: 20px;
+  }
+}
+
+
 
