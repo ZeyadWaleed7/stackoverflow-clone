@@ -1,6 +1,7 @@
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
 import { Home, Search, Bell, Mail, Users, User, BadgeCheck,CircleEllipsis } from "lucide-react";
+import profile from "../../assets/profile.png";
 
 const navigationItems = [
   { icon: Home, label: "Home", href: "/" },
@@ -26,6 +27,17 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
+      <div className="profile-section">
+        <img 
+          src={profile} 
+          alt="Profile" 
+          className="profile-pic"
+        />
+        <div className="profile-info">
+          <span className="profile-name">Zeyad</span>
+          <span className="profile-username">@ZeyadWaleed78</span>
+        </div>
+      </div>
     </aside>
   );
 };

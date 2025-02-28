@@ -1,16 +1,17 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { BrowserRouter as Router } from "react-router-dom";
+import Login from "./pages/Login/Login";
 
 const App = () => {
   return (
     <Router>
+      {/* <Navbar /> */}
       <div className="app-container">
-        <Navbar />
-        <div className="main-content">
-          <Sidebar />
-          <h2>Welcome to Twitter Clone</h2>
-        </div>
+        {/* <Sidebar /> */}
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
       </div>
     </Router>
   );
