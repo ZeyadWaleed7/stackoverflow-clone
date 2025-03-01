@@ -1,0 +1,125 @@
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-color: #3e3e3e;
+    align-items: center;
+    margin-top: -100px;
+    margin-left: 250px; 
+    margin-right: 350px; 
+    padding-top: 60px; 
+    width: calc(100% - 600px); 
+  }
+  
+  .search-bar {
+    width: 100%;
+    height: 50px;
+    max-width: 600px;
+    margin-bottom: -3px;
+  }
+  
+  .search-input-container {
+    display: flex;
+    align-items: center;
+    background-color: #000000;
+    border-radius: 9999px;
+    padding: 8px 16px;
+    border: 1px solid #3e3e3e; 
+  }
+  
+  .search-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: #657786;
+  }
+  
+  .search-input-container input {
+    flex: 1;
+    margin-left: 10px;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    color: #ffffff; 
+  }
+  
+  .settings-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .settings-button svg {
+    width: 24px;
+    height: 24px;
+    fill: #657786;
+  }
+  
+  .navigation-tabs {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .tab-list {
+    position: relative;
+
+    display: flex;
+    gap: 20px;
+  }
+  
+  .tab-list a {
+    position: relative;
+
+    text-decoration: none;
+    color: #657786;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    transition: color 0.2s, text-decoration 0.2s;
+  }
+  
+  .tab-list a:hover {
+    position: relative;
+
+    color: #ffffff; 
+    text-decoration: underline; 
+    text-decoration-color: #ffffff; 
+  }
+  
+  .tab-list a[aria-selected="true"] {
+    color: #f6fafc;
+  }
+  
+  .new-posts-notification {
+    margin-top: 20px;
+  }
+  
+  .new-posts-notification button {
+    display: flex;
+    align-items: center;
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    border-radius: 9999px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .new-posts-notification button:hover {
+    background-color: #1991db;
+  }
+  
+  .new-posts-notification svg {
+    width: 16px;
+    height: 16px;
+    fill: white;
+    margin-right: 8px;
+  }

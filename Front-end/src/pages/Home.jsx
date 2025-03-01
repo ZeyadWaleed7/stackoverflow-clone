@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Rightbar from "../components/Rightbar/Rightbar";
+import ExploreHead from "../components/ExploreHead/ExploreHead";
 
 
 const Home = () => {
@@ -9,6 +10,7 @@ const Home = () => {
       <Navbar  />
       <Sidebar />
       <Rightbar/>
+      <ExploreHead/>
     </div>
   );
 };
