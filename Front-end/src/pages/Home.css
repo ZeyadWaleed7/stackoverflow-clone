@@ -1,0 +1,27 @@
+.layout {
+    min-height: 100vh;
+    background-color: black;
+  }
+  
+  .content {
+    display: flex;
+    margin-top: 80px; /* Height of navbar */
+  }
+  
+  .main-content {
+    flex: 1;
+    margin-left: 250px; /* Width of sidebar */
+    margin-right: 350px; /* Width of rightbar */
+    min-height: calc(100vh - 80px);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .main-content {
+      margin-left: 80px;
+      margin-right: 0;
+    }
+    .rightbar {
+        display: none;
+    }
+
+  }

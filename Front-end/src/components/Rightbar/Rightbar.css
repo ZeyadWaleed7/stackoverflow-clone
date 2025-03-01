@@ -1,25 +1,4 @@
-.search-bar {
-    margin-bottom: 16px;
-    margin-top: 50px;
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 20px;
-    border: 1px solid #3e3e3e; /* Match the border color */
-    background-color: #000000; /* Match the background color */
-    color: #ffffff; /* Text color */
-    font-size: 14px;
-    outline: none;
-  }
-  
-  .search-input::placeholder {
-    color: #8899a6; /* Placeholder color */
-  }
-  
-  /* Main Container */
-  .main-container {
+    .main-container {
     display: flex;
     justify-content: space-between;
     padding: 16px;
@@ -35,31 +14,18 @@
     padding: 16px;
     color: #ffffff;
   }
-  
-  /* Right Sidebar */
   .right-sidebar {
-    width: 350px;
+    width: 400px;
     padding: 16px;
     background-color: #000000;
     border-radius: 16px;
     color: #ffffff;
     font-family: Arial, sans-serif;
-    position: fixed; /* Makes the sidebar stick to the right of the screen */
-    top: 16px; /* Adjust this value to control the vertical position */
-    right: 16px; /* Positions the sidebar on the right side of the screen */
-    height: fit-content; /* Ensures the sidebar doesn't overflow */
+    position: fixed;
+    top: 80px; /* Add margin from top to account for navbar height */
+    right: 16px;
+    overflow-y: auto; /* Add scrolling for overflow content */
   }
-  
-  /* Subscribe to Premium Box */
-  .premium-box {
-    background-color: #000000; /* Changed to black */
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    margin-top: 16px; /* Adjusted margin */
-    border: 1px solid #3e3e3e; /* Added white border */
-  }
-  
   .premium-box h3 {
     font-size: 18px;
     margin-bottom: 8px;
@@ -82,29 +48,24 @@
     width: 100%;
   }
   
-  .subscribe-button:hover {
-    background-color: #1991db;
-  }
-  
-  /* What's Happening Box */
   .trending-box {
-    background-color: #000000; /* Changed to black */
+    background-color: #000000;
     padding: 16px;
-    border-radius: 12px;
+    border-radius: 16px;
     margin-bottom: 16px;
-    border: 1px solid #3e3e3e; /* Added white border */
+    border: 1px solid #3e3e3e;
   }
   
+  .title{
+    font-weight: bolder;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
   .trending-box h3 {
     font-size: 18px;
     margin-bottom: 12px;
   }
-  
-  .trending-item {
-    padding: 12px 0;
-    border-bottom: 1px solid #3e3e3e; /* Changed border color to white */
-  }
-  
+
   .trending-item:last-child {
     border-bottom: none;
   }
@@ -132,21 +93,16 @@
     background: none;
     border: none;
     color: #1da1f2;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
-    margin-top: 12px;
+    margin-top: 16px;
   }
-  
-  .show-more-button:hover {
-    text-decoration: underline;
-  }
-  
-  /* Who to Follow Box */
+
   .follow-box {
-    background-color: #000000; /* Changed to black */
+    background-color: #000000;
     padding: 16px;
-    border-radius: 12px;
-    border: 1px solid #3e3e3e; /* Added white border */
+    border-radius: 16px;
+    border: 1px solid #3e3e3e;
   }
   
   .follow-box h3 {
@@ -159,7 +115,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #3e3e3e; /* Changed border color to white */
   }
   
   .follow-item:last-child {
@@ -172,25 +127,95 @@
   }
   
   .follow-name {
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: bolder;
   }
   
   .follow-username {
-    font-size: 12px;
-    color: #8899a6;
+    padding-top: 6px;
+    font-size: 16px;
+    color: #88939c;
   }
   
   .follow-button {
-    background-color: #1da0f2f1;
-    color: #ffffff;
+    background-color: #fffffff1;
+    color: black;
     border: none;
     padding: 8px 16px;
+    font-weight: bold;
     border-radius: 20px;
     font-size: 14px;
     cursor: pointer;
   }
+
+  .trending-item {
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
   
+  .trending-item:hover {
+    background-color: #0b0b0b;
+  }
+  
+  .trending-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .trending-right {
+    text-align: right;
+  }
+  
+  .trending-tag {
+    font-size: 13px;
+    color: #8899a6;
+  }
+  
+  .trending-topic {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .trending-posts {
+    font-size: 13px;
+    color: #8899a6;
+  }
+    
   .follow-button:hover {
-    background-color: #1991db;
+    background-color: rgb(209, 209, 209);
+  }
+
+  .follow-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .follow-profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .follow-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    cursor: pointer;
+  }
+  
+  .follow-item:hover {
+    background-color: #0b0b0b;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .right-sidebar {
+      display: none;
+    }
   }
