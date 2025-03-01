@@ -1,0 +1,196 @@
+.search-bar {
+    margin-bottom: 16px;
+    margin-top: 50px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #3e3e3e; /* Match the border color */
+    background-color: #000000; /* Match the background color */
+    color: #ffffff; /* Text color */
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .search-input::placeholder {
+    color: #8899a6; /* Placeholder color */
+  }
+  
+  /* Main Container */
+  .main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    gap: 16px; /* Adds space between left and right sidebars */
+    position: relative; /* Required for proper layout */
+  }
+  
+  /* Left Sidebar (Assuming you have one) */
+  .left-sidebar {
+    width: 250px; /* Adjust as needed */
+    background-color: #3e3e3e; /* Example color */
+    border-radius: 16px;
+    padding: 16px;
+    color: #ffffff;
+  }
+  
+  /* Right Sidebar */
+  .right-sidebar {
+    width: 350px;
+    padding: 16px;
+    background-color: #000000;
+    border-radius: 16px;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    position: fixed; /* Makes the sidebar stick to the right of the screen */
+    top: 16px; /* Adjust this value to control the vertical position */
+    right: 16px; /* Positions the sidebar on the right side of the screen */
+    height: fit-content; /* Ensures the sidebar doesn't overflow */
+  }
+  
+  /* Subscribe to Premium Box */
+  .premium-box {
+    background-color: #000000; /* Changed to black */
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    margin-top: 16px; /* Adjusted margin */
+    border: 1px solid #3e3e3e; /* Added white border */
+  }
+  
+  .premium-box h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .premium-box p {
+    font-size: 14px;
+    color: #8899a6;
+    margin-bottom: 12px;
+  }
+  
+  .subscribe-button {
+    background-color: #1da1f2;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .subscribe-button:hover {
+    background-color: #1991db;
+  }
+  
+  /* What's Happening Box */
+  .trending-box {
+    background-color: #000000; /* Changed to black */
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #3e3e3e; /* Added white border */
+  }
+  
+  .trending-box h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  
+  .trending-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #3e3e3e; /* Changed border color to white */
+  }
+  
+  .trending-item:last-child {
+    border-bottom: none;
+  }
+  
+  .trending-tag {
+    font-size: 12px;
+    color: #8899a6;
+  }
+  
+  .trending-topic {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-top: 4px;
+  }
+  
+  .trending-posts {
+    font-size: 12px;
+    color: #8899a6;
+    display: block;
+    margin-top: 4px;
+  }
+  
+  .show-more-button {
+    background: none;
+    border: none;
+    color: #1da1f2;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 12px;
+  }
+  
+  .show-more-button:hover {
+    text-decoration: underline;
+  }
+  
+  /* Who to Follow Box */
+  .follow-box {
+    background-color: #000000; /* Changed to black */
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #3e3e3e; /* Added white border */
+  }
+  
+  .follow-box h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  
+  .follow-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #3e3e3e; /* Changed border color to white */
+  }
+  
+  .follow-item:last-child {
+    border-bottom: none;
+  }
+  
+  .follow-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .follow-name {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .follow-username {
+    font-size: 12px;
+    color: #8899a6;
+  }
+  
+  .follow-button {
+    background-color: #1da0f2f1;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .follow-button:hover {
+    background-color: #1991db;
+  }

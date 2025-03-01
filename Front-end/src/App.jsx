@@ -7,9 +7,10 @@ import Tweet from "./components/Tweet/Tweet";
 const App = () => {
   return (
     <Router>
-      <Tweet />
+      <Home /> 
+      {/* <Tweet /> */}
         {/* <Signup />
-        <Home /> 
+        
          <Routes>
           <Route path="/" element={<Login />} />
         </Routes> */}
