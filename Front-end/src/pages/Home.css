@@ -5,13 +5,13 @@
   
   .content {
     display: flex;
-    margin-top: 80px; /* Height of navbar */
+    margin-top: 80px;
   }
   
   .main-content {
     flex: 1;
-    margin-left: 250px; /* Width of sidebar */
-    margin-right: 350px; /* Width of rightbar */
+    margin-left: 250px;
+    margin-right: 350px;
     min-height: calc(100vh - 80px);
   }
   
