@@ -6,7 +6,7 @@ import logo from "../../assets/twitter-logo.jpg";
 
 const navigationItems = [
   { icon: Home, label: "Home", href: "/" },
-  { icon: Search, label: "Explore", href: "/explore" },
+  { icon: Search, label: "Explore", href: "../../pages/Explore" },
   { icon: Bell, label: "Notifications", href: "/notifications" },
   { icon: Mail, label: "Messages", href: "/messages" },
   { icon: Users, label: "Communities", href: "/communities" },
