@@ -40,8 +40,6 @@ const TweetPost = () => {
           </svg>
         </div>
       </div>
-      
-
         <div className="tweet-footer">
             <div className="tweet-actions">
                 <div className="action-button">

@@ -2,6 +2,7 @@ import "./Sidebar.css";
 import { Link } from "react-router-dom";
 import { Home, Search, Bell, Mail, Users, User, BadgeCheck,CircleEllipsis } from "lucide-react";
 import profile from "../../assets/profile.png";
+import logo from "../../assets/twitter-logo.jpg";
 
 const navigationItems = [
   { icon: Home, label: "Home", href: "/" },
@@ -17,6 +18,9 @@ const navigationItems = [
 const Sidebar = () => {
   return (
     <aside className="sidebar">
+      <div className="logo">
+              <img src={logo} alt="Twitter Logo" className="twitter-logo" />
+            </div>
       <ul className="sidebar-nav">
         {navigationItems.map((item, index) => (
           <li key={index} className="nav-item">

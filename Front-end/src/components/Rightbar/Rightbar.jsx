@@ -1,23 +1,31 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import "./Rightbar.css";
+import profile from "../../assets/profile.png";
 
 const TrendingItem = ({ tag, topic, posts }) => {
   return (
     <div className="trending-item">
-      <span className="trending-tag">{tag}</span>
-      <span className="trending-topic">{topic}</span>
-      <span className="trending-posts">{posts}</span>
+      <div className="trending-left">
+        <span className="trending-tag">{tag}</span>
+        <span className="trending-posts">{posts}</span>
+      </div>
+      <div className="trending-right">
+        <span className="trending-topic">{topic}</span>
+      </div>
     </div>
   );
 };
 
-const FollowItem = ({ name, username }) => {
+const FollowItem = ({ name, username, profileImage }) => {
   return (
     <div className="follow-item">
-      <div className="follow-info">
-        <span className="follow-name">{name}</span>
-        <span className="follow-username">{username}</span>
+      <div className="follow-left">
+        <img src={profileImage} alt={name} className="follow-profile-pic" />
+        <div className="follow-info">
+          <span className="follow-name">{name}</span>
+          <span className="follow-username">{username}</span>
+        </div>
       </div>
       <button className="follow-button">Follow</button>
     </div>
@@ -25,7 +33,6 @@ const FollowItem = ({ name, username }) => {
 };
 
 const RightSidebar = () => {
-  // Trending data
   const trendingData = [
     { tag: "Trending in Egypt", topic: "#UzakSehir", posts: "31.5K posts" },
     { tag: "Only on X", topic: "#Tending", posts: "48.3K posts" },
@@ -33,29 +40,22 @@ const RightSidebar = () => {
   ];
 
   const followData = [
-    { name: "mohamed mansour", username: "@engmam84" },
-    { name: "zeyad walled", username: "@mohy77" },
-    { name: "mohy eldeen", username: "@zezo84" },
+    { 
+      name: "Zeyad Waleed", 
+      username: "@ZeyadWaleed",
+      profileImage: profile
+    },
+    { 
+      name: "Mohy Eldeen", 
+      username: "@Mohyyy",
+      profileImage: profile 
+    },
   ];
 
   return (
     <div className="right-sidebar">
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search"
-          className="search-input"
-        />
-      </div>
-
-      <div className="premium-box">
-        <h3>Subscribe to Premium</h3>
-        <p>Subscribe to unlock new features and if eligible, receive a share of revenue.</p>
-        <button className="subscribe-button">Subscribe</button>
-      </div>
-
       <div className="trending-box">
-        <h3>What’s happening</h3>
+        <p className="title">What’s happening</p>
         {trendingData.map((item, index) => (
           <TrendingItem
             key={index}
@@ -68,12 +68,13 @@ const RightSidebar = () => {
       </div>
 
       <div className="follow-box">
-        <h3>Who to follow</h3>
+      <p className="title">Who to follow</p>
         {followData.map((item, index) => (
           <FollowItem
             key={index}
             name={item.name}
             username={item.username}
+            profileImage={item.profileImage}
           />
         ))}
         <button className="show-more-button">Show more</button>
