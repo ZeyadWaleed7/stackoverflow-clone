@@ -1,8 +1,8 @@
 import Sidebar from "../components/Sidebar/Sidebar";
 import Rightbar from "../components/Rightbar/Rightbar";
-import ExploreHead from "../pages/ExploreHead/ExploreHead";
-import Hashtags from "../pages/Hashtags/Hashtags";
-
+import ExploreHead from "../components/ExploreHead/ExploreHead";
+import Hashtags from "../components/Hashtags/Hashtags";
+import "./Explore.css";
 
 const Explore = () => {
   return (
@@ -11,7 +11,7 @@ const Explore = () => {
         <Sidebar />
         <main className="main-content">
           <ExploreHead />
-          <Hashtags/>
+          <Hashtags />
         </main>
         <Rightbar />
       </div>
