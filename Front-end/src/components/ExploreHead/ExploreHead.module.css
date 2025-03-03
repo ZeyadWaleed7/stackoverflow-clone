@@ -1,13 +1,17 @@
 
 .main-container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    border-color: #3e3e3e;
-    align-items: center;
-    margin-top: -100px;
-    padding-top: 60px; 
-  }
+  width:648px;
+  padding: 16px;
+  padding-bottom: 10px;
+  position: fixed;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  flex-direction: column;
+  border-color: #3e3e3e;
+  align-items: center;
+  border-bottom: 1px solid #2f3336;
+}
   
   .search-bar {
     width: 100%;
@@ -42,28 +46,23 @@
   }
   
   .navigation-tabs {
-    position: relative;
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 12px;
-    margin-bottom: 24px;
+    margin-top: 8px;
   }
   
   .tab-list {
     position: relative;
-
     display: flex;
-    gap: 20px;
+    gap: 30px;
   }
   
   .tab-list a {
     position: relative;
-
     text-decoration: none;
     color: #657786;
     font-size: 16px;
-    font-weight: bold;
     padding: 8px 16px;
     border-radius: 9999px;
     transition: color 0.2s, text-decoration 0.2s;
@@ -74,9 +73,21 @@
   }
   
   .tab-list a[aria-selected="true"] {
+    font-weight: bold;
     color: #f6fafc;
   }
-  
+
+  .tab-list a[aria-selected="true"]::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #1d9bf0;
+    border-radius: 4px;
+  }
+
   .new-posts-notification {
     margin-top: 20px;
   }

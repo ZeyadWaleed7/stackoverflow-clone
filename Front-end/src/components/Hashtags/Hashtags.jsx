@@ -68,7 +68,6 @@ const trendsData = [
 const Hashtags = () => {
     return (
         <div className="trends-container">
-        <h2>Trending in Egypt</h2>
         <TrendList trends={trendsData} />
       </div>
     );

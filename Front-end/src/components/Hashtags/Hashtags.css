@@ -1,17 +1,18 @@
-/* Hashtags.css */
 .trends-container {
-    width: 650px;
-    background-color: transparent;
-    color: #fff;
-    padding: 18px;
-  }
+  margin-top:120px;
+  display: flex;
+  flex-direction: column;
+  width: 650px;
+  background-color: transparent;
+  color: #fff;
+  padding: 18px;
+}
   
   .trend-item {
-    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #2f3336;
   }
   
   .trend-item:last-child {
