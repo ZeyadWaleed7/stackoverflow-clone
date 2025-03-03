@@ -6,10 +6,7 @@
     border-color: #3e3e3e;
     align-items: center;
     margin-top: -100px;
-    margin-left: 250px; 
-    margin-right: 350px; 
     padding-top: 60px; 
-    width: calc(100% - 600px); 
   }
   
   .search-bar {
@@ -44,25 +41,13 @@
     color: #ffffff; 
   }
   
-  .settings-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-  
-  .settings-button svg {
-    width: 24px;
-    height: 24px;
-    fill: #657786;
-  }
-  
   .navigation-tabs {
     position: relative;
-
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 12px;
+    margin-bottom: 24px;
   }
   
   .tab-list {
@@ -85,11 +70,7 @@
   }
   
   .tab-list a:hover {
-    position: relative;
-
     color: #ffffff; 
-    text-decoration: underline; 
-    text-decoration-color: #ffffff; 
   }
   
   .tab-list a[aria-selected="true"] {

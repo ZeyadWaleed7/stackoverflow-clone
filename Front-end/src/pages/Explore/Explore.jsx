@@ -1,7 +1,7 @@
-import Sidebar from "../components/Sidebar/Sidebar";
-import Rightbar from "../components/Rightbar/Rightbar";
-import ExploreHead from "../components/ExploreHead/ExploreHead";
-import Hashtags from "../components/Hashtags/Hashtags";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Rightbar from "../../components/Rightbar/Rightbar";
+import ExploreHead from "../../components/ExploreHead/ExploreHead";
+import Hashtags from "../../components/Hashtags/Hashtags";
 import "./Explore.css";
 
 const Explore = () => {
@@ -18,5 +18,7 @@ const Explore = () => {
     </div>
   );
 };
+console.log("Explore Page Rendered");
+
 
 export default Explore;

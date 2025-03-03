@@ -1,9 +1,8 @@
 .trends-container {
-    background-color: #000;
+    width: 650px;
+    background-color: transparent;
     color: #fff;
-    padding: 16px;
-    border-radius: 12px;
-    border: 1px solid #2f3336;
+    padding: 18px;
   }
   
   .trend-item {
