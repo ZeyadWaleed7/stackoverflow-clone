@@ -1,6 +1,6 @@
-import Sidebar from "../components/Sidebar/Sidebar";
-import Rightbar from "../components/Rightbar/Rightbar";
-import Feed from "../pages/Feed/Feed";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Rightbar from "../../components/Rightbar/Rightbar";
+import Feed from "../Feed/Feed";
 import styles from "./Home.module.css";
 
 const Home = () => {
