@@ -25,8 +25,8 @@ const TrendItem = ({ rank, tag, topic, posts }) => {
     );
   };
   
-  const TrendList = ({ trends }) => {
-    return (
+const TrendList = ({ trends }) => {
+   return (
       <div className="trend-list">
         {trends.map((trend, index) => (
           <TrendItem
@@ -42,13 +42,27 @@ const TrendItem = ({ rank, tag, topic, posts }) => {
   };
   
 
-  const trendsData = [
+const trendsData = [
     { rank: 1, tag: "Trending in Egypt", topic: "#اعلانكم_ترند_𓅓О5592О9593" },
     { rank: 2, tag: "Trending in Egypt", topic: "#المداح", posts: "5,170 posts" },
     { rank: 3, tag: "Trending in Egypt", topic: "#قرات_كم_جزء" },
     { rank: 4, tag: "Only on X · Trending", topic: "رمضان كريم", posts: "232K posts" },
     { rank: 5, tag: "Trending in Egypt", topic: "#صلاه_التراويح_علي_الحياه" },
-    { rank: 6, tag: "Trending in Egypt", topic: "#الامه_الاسلاميه" }]
+    { rank: 6, tag: "Trending in Egypt", topic: "#الامه_الاسلاميه" },
+    { rank: 7, tag: "Only on X · Trending", topic: "رمضان كريم", posts: "232K posts" },
+    { rank: 8, tag: "Trending in Egypt", topic: "#صلاه_التراويح_علي_الحياه" },
+    { rank: 9, tag: "Trending in Egypt", topic: "#الامه_الاسلاميه" },
+    { rank: 10, tag: "Trending in Egypt", topic: "#المداح", posts: "5,170 posts" },
+    { rank: 11, tag: "Trending in Egypt", topic: "#قرات_كم_جزء" },
+    { rank: 12, tag: "Only on X · Trending", topic: "رمضان كريم", posts: "232K posts" },
+    { rank: 13, tag: "Trending in Egypt", topic: "#صلاه_التراويح_علي_الحياه" },
+    { rank: 14, tag: "Trending in Egypt", topic: "#الامه_الاسلاميه" },
+    { rank: 15, tag: "Only on X · Trending", topic: "رمضان كريم", posts: "232K posts" },
+    { rank: 16, tag: "Trending in Egypt", topic: "#صلاه_التراويح_علي_الحياه" },
+  
+  
+  ]
+
 
 
 const Hashtags = () => {
