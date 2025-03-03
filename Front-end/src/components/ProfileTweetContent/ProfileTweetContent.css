@@ -1,0 +1,39 @@
+.tweet-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .user-details {
+    margin-left: 10px;
+  }
+  
+  .user-name {
+    color: rgb(231, 233, 234);
+    font-weight: bold;
+  }
+  
+  .user-handle {
+    color: rgb(113, 118, 123);
+  }
+  
+  .tweet-text {
+    color: rgb(231, 233, 234);
+    margin-top: 8px;
+  }
+  
+  .tweet-media img {
+    width: 100%;
+    margin-top: 8px;
+  }
+  
