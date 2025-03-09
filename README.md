@@ -17,6 +17,14 @@ A Twitter-like social media platform built with React.js.
 - **State Management:** Context API / Redux (If used)
 - **Styling:** Tailwind CSS / CSS Modules
 
+## Services 
+- **User Service** → Manages user authentication, profiles, and settings.
+- **Tweet Service** → Handles tweet creation, deletion, likes, and retweets.
+- **Follow Service** → Manages followers and following relationships.
+- **Notification Service** → Sends notifications for likes, follows, and mentions.
+- **Media Service** → Handles image and video uploads.
+
+
 ## Installation
 1. Clone the repository:
 git clone https://github.com/ZeyadWaleed7/Twitter-clone
