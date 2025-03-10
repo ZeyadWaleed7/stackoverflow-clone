@@ -12,7 +12,6 @@ const navigationItems = [
   { icon: Users, label: "Communities", href: "#" },
   { icon: BadgeCheck, label: "Premium", href: "#" },
   { icon: User, label: "Profile", href: "../../pages/Profilepage" },
-  { icon: CircleEllipsis, label: "More", href: "#" }
 ];
 
 const Sidebar = () => {
