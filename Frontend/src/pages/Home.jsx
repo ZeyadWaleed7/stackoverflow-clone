@@ -8,13 +8,13 @@ const sampleQuestions = [
     {
         id: 1,
         author: {
-            name: "John Doe",
+            name: "Mariam Tarek",
             image: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
             reputation: 1234
         },
         tags: ['r', 'golang'],
         timestamp: 'modified 38 mins ago',
-        title: "I've fallen in love with Go and I don't know what to do",
+        title: "Go and I don't know what to do",
         excerpt: "I'm an early-career data scientist / machine learning engineer who has recently discovered the joys of Go programming. The simplicity, performance, and concurrency features have me hooked. I'm wondering if I should pivot my career towards Go development.",
         additionalTags: ['javascript', 'reactjs', 'react-hooks', 'react-router', 'react-hook-form'],
         upvotes: 215,
@@ -23,7 +23,7 @@ const sampleQuestions = [
     {
         id: 2,
         author: {
-            name: "Jane Smith",
+            name: "Mohy Saleh",
             image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
             reputation: 856
         },
@@ -38,7 +38,7 @@ const sampleQuestions = [
     {
         id: 3,
         author: {
-            name: "Mike Johnson",
+            name: "Mai",
             image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Mike",
             reputation: 2341
         },

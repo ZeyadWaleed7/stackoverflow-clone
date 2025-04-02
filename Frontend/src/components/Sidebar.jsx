@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaQuestion } from 'react-icons/fa';
+import { Home, HelpCircle } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -7,11 +7,11 @@ const Sidebar = () => {
         <aside className="sidebar">
             <nav className="sidebar-nav">
                 <a href="/" className="nav-link active">
-                    <FaHome className="nav-icon" />
+                    <Home className="nav-icon" strokeWidth={1.5} />
                     <span>Home</span>
                 </a>
                 <a href="/questions" className="nav-link">
-                    <FaQuestion className="nav-icon" />
+                    <HelpCircle className="nav-icon" strokeWidth={1.5} />
                     <span>Questions</span>
                 </a>
             </nav>
@@ -19,4 +19,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar; 
+export default Sidebar;

@@ -33,7 +33,7 @@ export default function Landing() {
                     <img 
                         src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon.png" 
                         alt="Stack Overflow Logo" 
-                        className="logo"
+                        className="landing-logo"
                     />
                     <h1 className="welcome-heading">Welcome to Stack Overflow</h1>
                     <p className="welcome-subheading">

@@ -13,12 +13,13 @@
 
 .main-content {
     flex: 1;
-    margin-left: 200px;
+    margin-left: 350px;
     max-width: 1200px;
     padding: 20px;
 }
 
 .questions-list {
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     gap: 10px;

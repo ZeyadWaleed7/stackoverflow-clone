@@ -18,8 +18,9 @@
 }
 
 .tag {
-    background-color: #E1ECF4;
-    color: #39739D;
+    background-color: #f1f2f3;
+    color: black;
+    font-weight: bold;
     padding: 4px 10px;
     border-radius: 3px;
     font-size: 12px;
