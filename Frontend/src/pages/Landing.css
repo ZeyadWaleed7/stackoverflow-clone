@@ -40,7 +40,7 @@ body {
     padding: 20px 0;
 }
 
-.logo {
+.landing-logo{
     width: 150px;
     margin-bottom: 32px;
 }
@@ -199,7 +199,7 @@ body {
         padding: 20px;
     }
 
-    .logo {
+    .landing-logo {
         width: 120px;
     }
 
