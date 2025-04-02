@@ -1,48 +1,16 @@
-# Twitter Clone (Frontend)
+# Stack Overflow Clone
 
 ## Overview
-A Twitter-like social media platform built with React.js.
+The Stack Overflow Clone is a web application designed as part of the Software Architecture and Design course (Phase 1). It replicates core functionalities of Stack Overflow, allowing users to sign in using Google, post questions and answers, upvote/downvote content, search for questions by keywords, and receive notifications for new answers or votes. The system is built using a microservices architecture to ensure scalability, maintainability, and fault tolerance.
 
-## Features
-- User authentication (Login, Signup)
-- Tweet creation, likes, retweets, and comments
-- User profile with followers and following
-- Explore page with trending topics
-- Search functionality
-- Notifications and messaging system
-- Dark mode support
+This repository contains the design artifacts for Phase 1, including requirements specifications, C4 model diagrams, architecture decision records (ADRs), API specifications, and use cases.
 
-## Tech Stack
-- **Frontend:** React.js, Vite
-- **State Management:** Context API / Redux (If used)
-- **Styling:** Tailwind CSS / CSS Modules
-
-## Services 
-- **User Service** → Manages user authentication, profiles, and settings.
-- **Tweet Service** → Handles tweet creation, deletion, likes, and retweets.
-- **Follow Service** → Manages followers and following relationships.
-- **Notification Service** → Sends notifications for likes, follows, and mentions.
-- **Media Service** → Handles image and video uploads.
-
-
-## Installation
-1. Clone the repository:
-git clone https://github.com/ZeyadWaleed7/Twitter-clone
-2. Navigate to the project directory:
-cd Twitter-clone
-3. Install dependencies:
-npm install
-
-## Contributing
-1. Fork the repository.
-2. Create a new branch:
-git checkout -b feature-branch   
-3. Commit changes:
-git commit -m "Added new feature"
-4. Push to GitHub and create a Pull Request.
-
-## License
-This project is open-source under the MIT License.
-
-
-   
+## Key Features
+- **User Authentication:** Sign in using Google OAuth2.
+- **Q&A Functionality:** Post questions, submit answers, and view Q&A threads.
+- **Voting:** Upvote or downvote questions and answers, with reputation tracking for users.
+- **Search:** Search for questions by keywords.
+- **Notifications:** Receive email notifications for new answers or votes on your questions.
+- **Microservices Architecture:** Built with independent services (e.g., Question Service, Answer Service, User Service, Notification Service) for scalability and maintainability.
+- **Performance Optimization:** Uses Redis for caching frequently accessed questions and MongoDB/PostgreSQL for data storage.
+- **Resilience:** Designed with fault tolerance in mind (resilience strategies to be detailed in the next section).
