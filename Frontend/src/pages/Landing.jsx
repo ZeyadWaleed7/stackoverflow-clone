@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { GoogleLogin } from '@react-oauth/google';
+import {jwtDecode} from "jwt-decode";
+import { useNavigate } from 'react-router-dom';
+import { GoogleLogin,googleLogout } from '@react-oauth/google';
 import './Landing.css';
 
 export default function Landing() {
+    const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -18,6 +21,10 @@ export default function Landing() {
     const handleSignUp = () => {
         console.log('Sign up clicked');
     };
+
+    function handellogout(){
+        googleLogout()
+    }
 
     return (
         <div className="landing-container">
@@ -67,11 +74,13 @@ export default function Landing() {
                             <GoogleLogin 
                                 onSuccess={(credentialResponse) => {
                                     console.log(credentialResponse);
+                                    console.log(jwtDecode(credentialResponse.credential))
+                                    navigate("/home")
                                 }} 
                                 onError={() => {
                                     console.log("login failed");
                                 }}
-                                useOneTap
+                                auto_select={true}
                                 theme="outline"
                                 shape="rectangular"
                                 size="large"
