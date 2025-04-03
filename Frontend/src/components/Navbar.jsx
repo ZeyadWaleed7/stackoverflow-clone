@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ onSearch }) => { 
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-        console.log('Search query:', e.target.value);
+        const query = e.target.value;
+        setSearchQuery(query);
+        if (onSearch) {
+            onSearch(query);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (onSearch) {
+            onSearch(searchQuery);
+        }
     };
 
     return (
@@ -16,16 +26,16 @@ const Navbar = () => {
                 <div className="navbar-logo">
                     <img src="./public/logo-stackoverflow.png" alt="Stack Overflow" className="logo" />
                 </div>
-                <div className="navbar-search">
+                <form onSubmit={handleSubmit} className="navbar-search">
                     <FaSearch className="search-icon" />
                     <input
                         type="text"
-                        placeholder="Search..."
+                        placeholder="Search questions or authors..."
                         value={searchQuery}
                         onChange={handleSearchChange}
                         className="search-input"
                     />
-                </div>
+                </form>
                 <div className="navbar-profile">
                     <div className="avatar">Z</div>
                     <div className="user-info">

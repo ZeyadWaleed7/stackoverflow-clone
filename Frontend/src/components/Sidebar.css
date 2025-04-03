@@ -4,8 +4,8 @@
     height: calc(100vh - 60px);
     position: fixed;
     border-right: 1px solid #EFF0F1;
-    left: 24px;
-    top: 60px;
+    left: 160px;
+    top: 70px;
 }
 
 .sidebar-nav {
@@ -24,7 +24,7 @@
 
 .nav-link:hover {
     color: #F48024;
-    background-color: #D3D6D8;
+    background-color: #f5f5f5;
 }
 
 .nav-link.active {

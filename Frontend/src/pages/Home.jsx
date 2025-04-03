@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Question from '../components/Question';
@@ -53,14 +53,26 @@ const sampleQuestions = [
 ];
 
 export default function Home() {
+
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearch = (query) => {
+        setSearchQuery(query.toLowerCase());
+    };
+
+    const filteredQuestions = sampleQuestions.filter(question => 
+        question.title.toLowerCase().includes(searchQuery) ||
+        question.author.name.toLowerCase().includes(searchQuery)
+    );
+
     return (
         <div className="home">
-            <Navbar />
+            <Navbar onSearch={handleSearch} />
             <div className="home-content">
                 <Sidebar />
                 <main className="main-content">
                     <div className="questions-list">
-                        {sampleQuestions.map(question => (
+                        {filteredQuestions.map(question => (
                             <Question key={question.id} question={question} />
                         ))}
                     </div>
