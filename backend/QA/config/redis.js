@@ -1,37 +1,65 @@
-const redis = require('redis');
-const { promisify } = require('util');
+const { createClient } = require('redis');
 
-// Singleton Redis client
-let client;
-
-function getRedisClient() {
-  if (!client) {
-    client = redis.createClient({
+class RedisClient {
+  constructor() {
+    this.client = createClient({
       socket: {
         host: process.env.REDIS_HOST || 'localhost',
         port: process.env.REDIS_PORT || 6379
       }
     });
 
-    client.on('error', (err) => console.error('Redis Client Error', err));
-    
-    // Auto-connect
-    client.connect().catch(err => console.error('Redis connection error:', err));
+    this.client.on('error', (err) => console.error('Redis Client Error', err));
+    this.connected = false;
   }
-  return client;
+
+  async connect() {
+    if (!this.connected) {
+      await this.client.connect();
+      this.connected = true;
+    }
+    return this.client;
+  }
+
+  async getAsync(key) {
+    return this.client.get(key);
+  }
+
+  async setAsync(key, value, options) {
+    return this.client.set(key, value, options);
+  }
+
+  async incrAsync(key) {
+    return this.client.incr(key);
+  }
+
+  async existsAsync(key) {
+    return this.client.exists(key);
+  }
+
+  async delAsync(key) {
+    return this.client.del(key);
+  }
+
+  async quitAsync() {
+    if (this.connected) {
+      await this.client.quit();
+      this.connected = false;
+    }
+  }
 }
 
-// Promisified methods
-const redisMethods = {
-  getAsync: promisify(client?.get).bind(client),
-  setAsync: promisify(client?.set).bind(client),
-  incrAsync: promisify(client?.incr).bind(client),
-  existsAsync: promisify(client?.exists).bind(client),
-  delAsync: promisify(client?.del).bind(client),
-  quitAsync: promisify(client?.quit).bind(client)
-};
+const redisClient = new RedisClient();
+
+// Auto-connect on first use
+redisClient.connect().catch(err => console.error('Redis initial connection error:', err));
 
 module.exports = {
-  getRedisClient,
-  ...redisMethods
+  redisClient,
+  getAsync: redisClient.getAsync.bind(redisClient),
+  setAsync: redisClient.setAsync.bind(redisClient),
+  incrAsync: redisClient.incrAsync.bind(redisClient),
+  existsAsync: redisClient.existsAsync.bind(redisClient),
+  delAsync: redisClient.delAsync.bind(redisClient),
+  quitAsync: redisClient.quitAsync.bind(redisClient)
 };

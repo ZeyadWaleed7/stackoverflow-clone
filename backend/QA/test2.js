@@ -1,11 +1,15 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const { getRedisClient, getAsync, setAsync, incrAsync, delAsync, quitAsync } = require('./config/redis');
+const { createClient } = require('redis');
 const cacheService = require('./services/cacheService');
 const Question = require('./models/questionsModel');
 
-// Initialize Redis client
-const redisClient = getRedisClient();
+// Create Redis client
+const redisClient = createClient({
+  url: 'redis://localhost:6379'
+});
+
+redisClient.on('error', (err) => console.error('Redis Client Error', err));
 
 // Test app setup
 const app = require('express')();
@@ -17,7 +21,7 @@ app.get('/questions/:id', async (req, res, next) => {
     const question = await Question.findById(req.params.id);
     if (!question) return res.status(404).send();
 
-    const { contentHash, accesses, cacheKey } = await cacheService.trackContentAccess(
+    const { contentHash, accesses } = await cacheService.trackContentAccess(
       question.title, 
       question.description
     );
@@ -84,7 +88,7 @@ async function runContentCacheTests() {
 
     console.log('\n=== All Tests Passed Successfully ===');
   } catch (error) {
-    console.error('\n!!! Test Failed:', error.message);
+    console.error('\n!!! Test Failed:', error);
   } finally {
     // Cleanup
     console.log('\nCleaning up...');
