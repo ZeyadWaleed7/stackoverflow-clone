@@ -1,21 +1,37 @@
 const redis = require('redis');
 const { promisify } = require('util');
 
-const client = redis.createClient({
-  host: process.env.REDIS_HOST || 'localhost',
-  port: process.env.REDIS_PORT || 6379
-});
+// Singleton Redis client
+let client;
 
-client.on('error', (err) => console.error('Redis Client Error', err));
+function getRedisClient() {
+  if (!client) {
+    client = redis.createClient({
+      socket: {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: process.env.REDIS_PORT || 6379
+      }
+    });
 
-// Promisify Redis methods for async/await
-const getAsync = promisify(client.get).bind(client);
-const setAsync = promisify(client.set).bind(client);
-const incrAsync = promisify(client.incr).bind(client);
+    client.on('error', (err) => console.error('Redis Client Error', err));
+    
+    // Auto-connect
+    client.connect().catch(err => console.error('Redis connection error:', err));
+  }
+  return client;
+}
+
+// Promisified methods
+const redisMethods = {
+  getAsync: promisify(client?.get).bind(client),
+  setAsync: promisify(client?.set).bind(client),
+  incrAsync: promisify(client?.incr).bind(client),
+  existsAsync: promisify(client?.exists).bind(client),
+  delAsync: promisify(client?.del).bind(client),
+  quitAsync: promisify(client?.quit).bind(client)
+};
 
 module.exports = {
-  client,
-  getAsync,
-  setAsync,
-  incrAsync
+  getRedisClient,
+  ...redisMethods
 };

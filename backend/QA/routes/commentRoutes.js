@@ -10,7 +10,6 @@ const {
 
 router.post('/', createComment);
 router.get('/question/:questionId', getCommentsByQuestionId);
-router.get('/answer/:answerId', getCommentsByAnswerId);
 router.put('/:id', updateComment);
 router.delete('/:id', deleteComment);
 
