@@ -9,6 +9,19 @@ body {
     height: 100vh;
   }
   
+  .welcome-heading {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2F3337;
+    margin-bottom: 8px;
+  }
+
+  .welcome-subheading {
+    font-size: 16px;
+    color: #6A737C;
+    margin-bottom: 24px;
+  } 
+
   .login-container {
     text-align: center;
     background-color: white;
@@ -22,17 +35,16 @@ body {
   }
   
   button {
-    background-color: #4285F4;
+    background-color: #f4811f;
     color: white;
     font-size: 16px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
   }
   
   button:hover {
-    background-color: #357AE8;
+    background-color: #db6600;
   }
   

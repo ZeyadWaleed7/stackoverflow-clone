@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-/* Add box-sizing reset and prevent body scroll */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -123,7 +122,6 @@ body {
     padding: 0 10px;
 }
 
-/* Update Google login container styles */
 .google-login-container {
     width: 100%;
     box-sizing: border-box;
@@ -182,7 +180,6 @@ body {
     color: #757575 !important;
 }
 
-/* Remove the old google-button styles since we're not using them anymore */
 .google-button,
 .google-icon {
     display: none;

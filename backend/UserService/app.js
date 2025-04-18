@@ -1,12 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./src/routes/userRoutes');
 
 const app = express();
 
-// Environment Variables
-global.MONGO_URI = 'mongodb://127.0.0.1:27017/Stack-Overflow';
-global.PORT = 5000;
+global.JWT_SECRET = process.env.JWT_SECRET;
+global.MONGO_URI = process.env.MONGO_URI;
+global.PORT = process.env.PORT || 5001;
 
 const connectDB = async () => {
   try {

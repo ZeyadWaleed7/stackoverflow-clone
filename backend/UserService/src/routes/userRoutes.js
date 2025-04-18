@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const {
   createUser,
   getAllUsers,
@@ -7,17 +8,24 @@ const {
   updateUser,
   deleteUser
 } = require('../controllers/userController');
+
 const { googleAuth } = require('../controllers/authController');
 const { authenticateJWT } = require('../middlewares/authMiddleware');
 
 router.post('/auth/google', googleAuth);
 
-router.get('/profile', authenticateJWT, getUserById);
+router.get('/userprofile', authenticateJWT, (req, res) => {
+  res.json({
+    message: 'Token is valid!',
+    userId: req.user.userId,
+    name: req.user.name
+  });
+});
 
 router.post('/', createUser);
-router.get('/',getAllUsers);
-router.get('/:id', authenticateJWT, getUserById); // Protect this route
-router.put('/:id', authenticateJWT, updateUser); // Protect this route
-router.delete('/:id', authenticateJWT, deleteUser); // Protect this route
+router.get('/', getAllUsers);
+router.get('/:id', authenticateJWT, getUserById);
+router.put('/:id', authenticateJWT, updateUser);
+router.delete('/:id', authenticateJWT, deleteUser);
 
 module.exports = router;
