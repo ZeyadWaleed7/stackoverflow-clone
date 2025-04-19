@@ -1,0 +1,60 @@
+const Question = require("../models/Question");
+const Answer = require("../models/Answer");
+
+exports.toggleQuestionLike = async (req, res) => {
+  try {
+    const question = await Question.findById(req.params.id);
+    const userId = req.body.userId;
+
+    if (!question) return res.status(404).json({ message: "Question not found" });
+
+    if (!question.likes.includes(userId)) {
+      question.likes.push(userId);
+      await question.save();
+      res.status(200).json({
+        message: "The question has been liked",
+        question,
+        likesCount: question.likes.length
+      });
+    } else {
+      question.likes.pull(userId);
+      await question.save();
+      res.status(200).json({
+        message: "The question has been disliked",
+        question,
+        likesCount: question.likes.length
+      });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+exports.toggleAnswerLike = async (req, res) => {
+  try {
+    const answer = await Answer.findById(req.params.id);
+    const userId = req.body.userId;
+
+    if (!answer) return res.status(404).json({ message: "Answer not found" });
+
+    if (!answer.likes.includes(userId)) {
+      answer.likes.push(userId);
+      await answer.save();
+      res.status(200).json({
+        message: "The answer has been liked",
+        answer,
+        likesCount: answer.likes.length
+      });
+    } else {
+      answer.likes.pull(userId);
+      await answer.save();
+      res.status(200).json({
+        message: "The answer has been disliked",
+        answer,
+        likesCount: answer.likes.length
+      });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
