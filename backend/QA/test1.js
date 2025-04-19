@@ -4,7 +4,7 @@ const questionRoutes = require('./routes/questionRoutes');
 const answerRoutes = require('./routes/answerRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const connectDB = require('./config/mongo');
-require('./config/redis');
+// require('./config/redis');
 
 const app = express();
 

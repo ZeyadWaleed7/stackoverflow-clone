@@ -1,17 +1,39 @@
+// const express = require('express');
+// const router = express.Router();
+// const {
+//   createQuestion,
+//   addAnswerToQuestion,
+//   addCommentToQuestion,
+//   getQuestionById
+// } = require('../controllers/questionsControllers');
+// const { checkQuestionCache } = require('../middlewars/cacheMiddleware');
+
+// router.post('/', createQuestion);
+// router.post('/:questionId/answers', addAnswerToQuestion);
+// router.post('/:questionId/comments', addCommentToQuestion);
+// router.get('/:id', getQuestionById);
+// // router.get('/:id', checkQuestionCache, getQuestionById); // Added caching middleware
+
+// module.exports = router;
+
 const express = require('express');
 const router = express.Router();
 const {
   createQuestion,
   addAnswerToQuestion,
   addCommentToQuestion,
-  getQuestionById
+  getQuestionById,
+  getAllQuestions,
+  updateQuestion,
+  deleteQuestion
 } = require('../controllers/questionsControllers');
-const { checkQuestionCache } = require('../middlewares/cacheMiddleware');
 
 router.post('/', createQuestion);
 router.post('/:questionId/answers', addAnswerToQuestion);
 router.post('/:questionId/comments', addCommentToQuestion);
 router.get('/:id', getQuestionById);
-router.get('/:id', checkQuestionCache, getQuestionById); // Added caching middleware
+router.get('/', getAllQuestions);
+router.put('/:id', updateQuestion);
+router.delete('/:id', deleteQuestion);
 
 module.exports = router;
