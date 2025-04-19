@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const connectDB = require('./src/config/db');
-require('./src/config/googleStrategy'); 
+require('./src/config/passport'); // Changed to use the passport.js config
 
 const authRoutes = require('./src/routes/authRoutes');
 
