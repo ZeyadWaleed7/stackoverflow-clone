@@ -1,11 +1,11 @@
 {
   "name": "twitter-clone",
   "version": "1.0.0",
-  "description": "A Twitter-like social media platform built with React.js.",
-  "main": "backend/server.js",
+  "main": "backend/API-Gateway/index.js",
+  
   "scripts": {
-    "dev": "nodemon backend/server.js",
-    "start": "node backend/server.js"
+    "dev": "nodemon backend/API-Gateway/index.js",
+    "start": "node backend/API-Gateway/index.js"
   },
   "keywords": [],
   "author": "",
