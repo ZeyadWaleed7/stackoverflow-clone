@@ -41,7 +41,6 @@ body {
 
 .landing-logo{
     width: 150px;
-    margin-bottom: 32px;
 }
 
 .welcome-heading {
@@ -54,7 +53,7 @@ body {
 .welcome-subheading {
     font-size: 16px;
     color: #6A737C;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .signup-link {

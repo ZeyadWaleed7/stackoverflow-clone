@@ -1,6 +1,6 @@
 import './App.css'
 import { HashRouter, Routes, Route } from 'react-router-dom'
-import Landing from "./pages/Landing"
+import Landing from "./pages/Login"
 import Home from "./pages/Home"
 
 function App() {
