@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
-import Question from '../components/Question';
+import Navbar from '../../components/Navbar';
+import Sidebar from '../../components/Sidebar';
+import Question from '../../components/Question';
 import './home.css';
 
 const sampleQuestions = [
     {
         id: 1,
         author: {
-            name: "Mariam Tarek",
+            name: "Mariam Samaha",
             image: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
             reputation: 1234
         },
