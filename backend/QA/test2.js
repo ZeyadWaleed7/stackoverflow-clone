@@ -26,14 +26,12 @@ app.get('/questions/:id', async (req, res, next) => {
       question.description
     );
 
-    // Check cache
     const cached = await cacheService.getCachedContent(contentHash);
     if (cached) {
       req.cacheHit = true;
       return res.status(200).json(cached);
     }
 
-    // Cache if threshold reached
     if (accesses >= 3) {
       await cacheService.cacheContent(contentHash, question);
       console.log(`[CACHE] Stored content ${contentHash}`);
