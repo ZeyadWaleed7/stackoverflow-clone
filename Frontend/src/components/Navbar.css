@@ -54,6 +54,34 @@
     gap: 10px;
 }
 
+.notification-icon {
+    cursor: pointer;
+    font-size: 18px;
+    color: #6A737C;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.notification-icon:hover {
+    background-color: #EFF0F1;
+    color: #f56565;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    background-color: #f56565;
+    border-radius: 50%;
+}
+
 .avatar {
     width: 40px;
     height: 40px;
@@ -85,4 +113,4 @@
     .navbar-search {
         max-width: 300px;
     }
-} 
+}

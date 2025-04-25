@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaBell } from 'react-icons/fa';
 import './Navbar.css';
 
 const Navbar = ({ onSearch }) => { 
     const [searchQuery, setSearchQuery] = useState('');
+    const [hasNotifications, setHasNotifications] = useState(true); // Example state to show notification badge
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -20,11 +21,17 @@ const Navbar = ({ onSearch }) => {
         }
     };
 
+    const handleNotificationClick = () => {
+        // Here you would typically open a notifications panel
+        // For now, we'll just toggle the notification state as a demo
+        setHasNotifications(false);
+    };
+
     return (
         <header className="navbar">
             <div className="navbar-container">
                 <div className="navbar-logo">
-                    <img src="./public/logo-stackoverflow.png" alt="Stack Overflow" className="logo" />
+                    <img src="/logo-stackoverflow.png" alt="Stack Overflow" className="logo" />
                 </div>
                 <form onSubmit={handleSubmit} className="navbar-search">
                     <FaSearch className="search-icon" />
@@ -37,6 +44,10 @@ const Navbar = ({ onSearch }) => {
                     />
                 </form>
                 <div className="navbar-profile">
+                    <div className="notification-icon" onClick={handleNotificationClick}>
+                        <FaBell />
+                        {hasNotifications && <span className="notification-badge"></span>}
+                    </div>
                     <div className="avatar">Z</div>
                     <div className="user-info">
                         <span className="username">Zeyad Waleed</span>
@@ -47,4 +58,4 @@ const Navbar = ({ onSearch }) => {
     );
 };
 
-export default Navbar; 
+export default Navbar;
