@@ -15,6 +15,4 @@ app.use('/auth', authRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Auth service running on port ${PORT}`));
 
-console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("CALLBACK_URL:", process.env.CALLBACK_URL);
 
