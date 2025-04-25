@@ -1,4 +1,4 @@
-   const express = require('express');
+const express = require('express');
    const jwt = require('jsonwebtoken');
    const redis = require('redis');
    const axios = require('axios');
@@ -6,7 +6,7 @@
    app.use(express.json());
    const PORT = process.env.PORT || 8080;
    
-   const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://auth-service:8081';
+   const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://auth-service:5000';
    const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://user-service:8082';
    const QA_SERVICE_URL = process.env.QA_SERVICE_URL || 'http://qa-service:8083';
    const VOTE_SERVICE_URL = process.env.VOTE_SERVICE_URL || 'http://vote-service:8084';
