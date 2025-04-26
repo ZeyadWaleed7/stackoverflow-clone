@@ -1,18 +1,18 @@
 version: '3.8'
 
 services:
-  # auth-service:
-  #   build:
-  #     context: ./Auth-service
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "5001:5000"
-  #   environment:
-  #     - NODE_ENV=production
-  #   volumes:
-  #     - ./Auth-service:/usr/src/app
-  #   networks:
-  #     - app-network
+  auth-service:
+    build:
+      context: ./Auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./Auth-service:/usr/src/app
+    networks:
+      - app-network
 
   qa-service:
     build:
@@ -44,18 +44,18 @@ services:
 
 
 
-  # user-service:
-  #   build:
-  #     context: ./UserService
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "5003:5000"
-  #   environment:
-  #     - NODE_ENV=production
-  #   volumes:
-  #     - ./UserService:/usr/src/app
-  #   networks:
-  #     - app-network
+  user-service:
+    build:
+      context: ./UserService
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./UserService:/usr/src/app
+    networks:
+      - app-network
 
 networks:
   app-network:
