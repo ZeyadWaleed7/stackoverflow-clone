@@ -8,7 +8,8 @@ const connectDB = require('./config/mongo');
 
 const app = express();
 
-global.MONGO_URI = 'mongodb://127.0.0.1:27017/Stack-Overflow';
+// global.MONGO_URI = 'mongodb://127.0.0.1:27017/Stack-Overflow';
+global.MONGO_URI = 'mongodb+srv://mohyEldeen_1234:1_gfPPvalnw@cluster0.pyjmtip.mongodb.net/Stack-Overflow';
 global.PORT = 5000;
 
 connectDB();

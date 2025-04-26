@@ -1,45 +1,66 @@
 version: '3.8'
 
 services:
-  auth-service:
-    build:
-      context: ./Auth-service
-      dockerfile: Dockerfile
-    ports:
-      - "5001:5000"
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./Auth-service:/usr/src/app
-    networks:
-      - app-network
+  # auth-service:
+  #   build:
+  #     context: ./Auth-service
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5001:5000"
+  #   environment:
+  #     - NODE_ENV=production
+  #   volumes:
+  #     - ./Auth-service:/usr/src/app
+  #   networks:
+  #     - app-network
 
   qa-service:
     build:
-      context: ./QA
+      context: ./q&a
       dockerfile: Dockerfile
     ports:
       - "5002:5000"
     environment:
       - NODE_ENV=production
     volumes:
-      - ./QA:/usr/src/app
+      - ./q&a:/usr/src/app
     networks:
       - app-network
 
-  user-service:
-    build:
-      context: ./UserService
-      dockerfile: Dockerfile
+  
+  redis:
+    image: redis:7
+    container_name: redis
     ports:
-      - "5003:5000"
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./UserService:/usr/src/app
-    networks:
-      - app-network
+    - "6379:6379"
+
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    ports:
+      - "27017:27017"
+
+
+
+
+
+  # user-service:
+  #   build:
+  #     context: ./UserService
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5003:5000"
+  #   environment:
+  #     - NODE_ENV=production
+  #   volumes:
+  #     - ./UserService:/usr/src/app
+  #   networks:
+  #     - app-network
 
 networks:
   app-network:
     driver: bridge
+
+
+volumes:
+  mongo-data:

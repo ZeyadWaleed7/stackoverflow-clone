@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["node", "test2.js"]
+CMD ["node", "test1.js"]

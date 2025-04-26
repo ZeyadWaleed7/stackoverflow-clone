@@ -14,3 +14,7 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+
+
+// global.MONGO_URI = "mongodb+srv://mohyEldeen_1234:1_gfPPvalnw@cluster0.pyjmtip.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/Stack-Overflow";
+// global.MONGO_URI = 'mongodb://127.0.0.1:27017/Stack-Overflow';
