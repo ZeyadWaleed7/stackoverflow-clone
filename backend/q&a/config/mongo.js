@@ -5,10 +5,12 @@ const connectDB = async () => {
     await mongoose.connect(global.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     });
     console.log('MongoDB connected');
   } catch (err) {
-    console.error('MongoDB connection error:', err.message);
+    console.log(`MongoDB Connected: ${mongoose.connection.host}`);
     process.exit(1);
   }
 };
