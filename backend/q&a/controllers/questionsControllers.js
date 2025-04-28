@@ -77,6 +77,11 @@ const Answer = require('../models/answerModel');
 const Comment = require('../models/commentModel');
 const cacheService = require('../services/cacheService');
 
+// Helper function to generate cache key
+// function getCacheKey(title, description) {
+//   return cacheService.generateContentHash(title, description);
+// }
+
 exports.createQuestion = async (req, res) => {
   try {
     const { title, description, tags } = req.body;
@@ -90,18 +95,19 @@ exports.createQuestion = async (req, res) => {
 
 exports.addAnswerToQuestion = async (req, res) => {
   try {
-    const questionId = req.params.questionId;
+    const { questionId } = req.params;
     const { content } = req.body;
 
-    const answer = new Answer({ questionId, content });
-    await answer.save();
-
     const question = await Question.findById(questionId);
-    if (!question) {
-      return res.status(404).json({ error: 'Question not found' });
-    }
+    if (!question) return res.status(404).json({ error: 'Question not found' });
+
+    const answer = new Answer({ content });
     question.answers.push(answer);
     await question.save();
+
+    // Invalidate cache after update
+    const contentHash = getCacheKey(question.title, question.description);
+    await cacheService.invalidateContentCache(contentHash);
 
     res.status(200).json(question);
   } catch (error) {
@@ -111,18 +117,19 @@ exports.addAnswerToQuestion = async (req, res) => {
 
 exports.addCommentToQuestion = async (req, res) => {
   try {
-    const questionId = req.params.questionId;
+    const { questionId } = req.params;
     const { content } = req.body;
 
-    const comment = new Comment({ questionId, content });
-    await comment.save();
-
     const question = await Question.findById(questionId);
-    if (!question) {
-      return res.status(404).json({ error: 'Question not found' });
-    }
+    if (!question) return res.status(404).json({ error: 'Question not found' });
+
+    const comment = new Comment({ content });
     question.comments.push(comment);
     await question.save();
+
+    // Invalidate cache after update
+    const contentHash = getCacheKey(question.title, question.description);
+    await cacheService.invalidateContentCache(contentHash);
 
     res.status(200).json(question);
   } catch (error) {
@@ -132,31 +139,73 @@ exports.addCommentToQuestion = async (req, res) => {
 
 exports.getQuestionById = async (req, res) => {
   try {
-    const question = await Question.findById(req.params.id).populate('answers.content comments.content');
+    const questionId = req.params.id;
+    
+    // 1. Check cache
+    const cachedQuestion = await cacheService.getCachedQuestion(questionId);
+    if (cachedQuestion) {
+      return res.status(200).json(cachedQuestion);
+    }
+
+    // 2. Check database
+    const question = await Question.findById(questionId);
     if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
+
+    // 3. Cache and return
+    await cacheService.cacheQuestion(questionId, question);
     res.status(200).json(question);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
+// exports.getAllQuestions = async (req, res) => {
+//   try {
+//     const cacheKey = 'all_questions';
+//     const cachedQuestions = await cacheService.getCachedQuestionsList(cacheKey);
+    
+//     if (cachedQuestions) {
+//       console.log('[CACHE] HIT for all questions');
+//       return res.status(200).json(cachedQuestions);
+//     }
+
+//     const questions = await Question.find().populate('answers.content comments.content');
+//     await cacheService.cacheQuestionsList(cacheKey, questions);
+//     res.status(200).json(questions);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 exports.getAllQuestions = async (req, res) => {
   try {
-    const questions = await Question.find().populate('answers.content comments.content');
+    const cacheKey = 'all_questions';
+    const cachedQuestions = await cacheService.getCachedQuestionsList(cacheKey);
+    
+    if (cachedQuestions) {
+      console.log('[CACHE] HIT for all questions');
+      return res.status(200).json(cachedQuestions);
+    }
+
+    const questions = await Question.find().populate('answers comments');
+    await cacheService.cacheQuestionsList(cacheKey, questions); // No manual TTL here
     res.status(200).json(questions);
   } catch (error) {
+    console.error('Error in getAllQuestions:', error);
     res.status(500).json({ error: error.message });
   }
 };
 
 exports.updateQuestion = async (req, res) => {
   try {
-    const question = await Question.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const questionId = req.params.id;
+    const question = await Question.findByIdAndUpdate(questionId, req.body, { new: true });
     if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
+    await cacheService.invalidateQuestionCache(questionId); // Invalidate cache
     res.status(200).json(question);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -165,20 +214,28 @@ exports.updateQuestion = async (req, res) => {
 
 exports.deleteQuestion = async (req, res) => {
   try {
-    const question = await Question.findByIdAndDelete(req.params.id);
+    const questionId = req.params.id;
+    const question = await Question.findByIdAndDelete(questionId);
+    
     if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
+
+    // Invalidate both caches
+    await cacheService.invalidateQuestionCache(questionId);
+    await cacheService.invalidateQuestionsListCache(); // Add this function
+    
     res.status(200).json({ message: 'Question deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
-
+};
+// Manual Cache Management
 exports.getCache = async (req, res) => {
   try {
     const { key } = req.params;
     const cached = await cacheService.getCachedContent(key);
+
     if (cached) {
       res.status(200).json(cached);
     } else {
@@ -198,3 +255,21 @@ exports.postCache = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getAllCachedQuestions = async (req, res) => {
+  try {
+    const cachedQuestions = await cacheService.getAllCachedContent();
+    res.status(200).json(cachedQuestions);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// {
+//   "key": "test",
+//   "data": {
+//     "title": "test",
+//     "description": "test",
+//     "tags": ["sample", "question"]
+//     }
+// }

@@ -8,7 +8,7 @@ module.exports = {
       if (!question) return next();
 
       const titleCount = await Question.countDocuments({ title: question.title });
-      if (titleCount > 3) {
+      if (titleCount > 1) {
         const contentHash = cacheService.generateContentHash(question.title, question.description);
         const cached = await cacheService.getCachedContent(contentHash);
 
