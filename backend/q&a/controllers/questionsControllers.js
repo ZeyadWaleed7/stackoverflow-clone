@@ -75,6 +75,7 @@
 const Question = require('../models/questionsModel');
 const Answer = require('../models/answerModel');
 const Comment = require('../models/commentModel');
+const cacheService = require('../services/cacheService');
 
 exports.createQuestion = async (req, res) => {
   try {
@@ -169,6 +170,30 @@ exports.deleteQuestion = async (req, res) => {
       return res.status(404).json({ error: 'Question not found' });
     }
     res.status(200).json({ message: 'Question deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+exports.getCache = async (req, res) => {
+  try {
+    const { key } = req.params;
+    const cached = await cacheService.getCachedContent(key);
+    if (cached) {
+      res.status(200).json(cached);
+    } else {
+      res.status(404).json({ error: 'Cache not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.postCache = async (req, res) => {
+  try {
+    const { key, data } = req.body;
+    await cacheService.cacheContent(key, data);
+    res.status(200).json({ message: 'Cache stored successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

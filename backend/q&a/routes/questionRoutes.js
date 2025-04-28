@@ -25,7 +25,9 @@ const {
   getQuestionById,
   getAllQuestions,
   updateQuestion,
-  deleteQuestion
+  deleteQuestion,
+  getCache,
+  postCache
 } = require('../controllers/questionsControllers');
 
 router.post('/', createQuestion);
@@ -35,5 +37,8 @@ router.get('/:id', getQuestionById);
 router.get('/', getAllQuestions);
 router.put('/:id', updateQuestion);
 router.delete('/:id', deleteQuestion);
+
+router.get('/cache/:key', getCache);
+router.post('/cache', postCache);
 
 module.exports = router;

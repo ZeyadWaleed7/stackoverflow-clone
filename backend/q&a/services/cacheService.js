@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { getAsync, setAsync, incrAsync, delAsync } = require('../config/redis');
+const { getAsync, setAsync, delAsync } = require('../config/redis');
 
 function generateContentHash(title, description) {
   return crypto.createHash('sha256')
@@ -8,25 +8,13 @@ function generateContentHash(title, description) {
 }
 
 module.exports = {
-  trackContentAccess: async (title, description) => {
-    const contentHash = generateContentHash(title, description);
-    const accessKey = `content:access:${contentHash}`;
-    const cacheKey = `content:cache:${contentHash}`;
-
-    const accesses = await incrAsync(accessKey);
-    
-    if (accesses === 1) {
-      await setAsync(accessKey, '1', 'EX', 86400);
-    }
-
-    return { contentHash, accesses, cacheKey };
-  },
+  generateContentHash,
 
   cacheContent: async (contentHash, questionData) => {
     await setAsync(
       `content:cache:${contentHash}`,
       JSON.stringify(questionData),
-      'EX', 
+      'EX',
       3600 // 1 hour cache
     );
   },
@@ -38,6 +26,5 @@ module.exports = {
 
   invalidateContentCache: async (contentHash) => {
     await delAsync(`content:cache:${contentHash}`);
-    await delAsync(`content:access:${contentHash}`);
   }
 };
