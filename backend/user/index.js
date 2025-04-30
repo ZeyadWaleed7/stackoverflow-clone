@@ -1,11 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const userRoutes = require('./src/routes/userRoutes');
 
 const app = express();
 
-global.JWT_SECRET = process.env.JWT_SECRET;
+process.env.JWT_SECRET = process.env.JWT_SECRET;
 global.MONGO_URI = process.env.MONGO_URI;
 global.PORT = process.env.PORT || 5001;
 global.GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -23,6 +24,7 @@ const connectDB = async () => {
 
 connectDB();
 
+app.use(cors());
 app.use(express.json());
 app.use('/api/users', userRoutes);
 

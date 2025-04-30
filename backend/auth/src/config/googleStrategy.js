@@ -10,7 +10,7 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     // Ask User Service to create or find user
-    const response = await axios.post(`${process.env.USER_SERVICE_URL}/`, {
+    const response = await axios.post('http://localhost:5001/api/users', {
       googleId: profile.id,
       name: profile.displayName,
       email: profile.emails[0].value
@@ -18,10 +18,8 @@ passport.use(new GoogleStrategy({
 
     const user = response.data;
 
-    // Generate JWT with both userId and name
     const token = generateToken(user._id, user.name);
 
-    // Return both user and token
     return done(null, { user, token });
   } catch (err) {
     return done(err, null);
