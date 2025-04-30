@@ -25,41 +25,28 @@ class RedisClient {
     return this.client.get(key);
   }
 
-  async setAsync(key, value, options) {
-    return this.client.set(key, value, options);
-  }
-
-  async incrAsync(key) {
-    return this.client.incr(key);
-  }
-
-  async existsAsync(key) {
-    return this.client.exists(key);
+  async setAsync(key, value, expirationInSeconds = 3600) {
+    if (expirationInSeconds <= 0) {
+      return this.client.set(key, value); // No expiration if invalid
+    }
+    return this.client.set(key, value, {
+      EX: expirationInSeconds
+    });
   }
 
   async delAsync(key) {
     return this.client.del(key);
   }
-
-  async quitAsync() {
-    if (this.connected) {
-      await this.client.quit();
-      this.connected = false;
-    }
-  }
 }
 
 const redisClient = new RedisClient();
 
-// Auto-connect on first use
+// Auto-connect
 redisClient.connect().catch(err => console.error('Redis initial connection error:', err));
 
 module.exports = {
   redisClient,
   getAsync: redisClient.getAsync.bind(redisClient),
   setAsync: redisClient.setAsync.bind(redisClient),
-  incrAsync: redisClient.incrAsync.bind(redisClient),
-  existsAsync: redisClient.existsAsync.bind(redisClient),
   delAsync: redisClient.delAsync.bind(redisClient),
-  quitAsync: redisClient.quitAsync.bind(redisClient)
 };
