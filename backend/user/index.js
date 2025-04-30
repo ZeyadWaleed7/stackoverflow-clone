@@ -8,12 +8,11 @@ const app = express();
 global.JWT_SECRET = process.env.JWT_SECRET;
 global.MONGO_URI = process.env.MONGO_URI;
 global.PORT = process.env.PORT || 5001;
+global.GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 const connectDB = async () => {
   try {
     await mongoose.connect(global.MONGO_URI, {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
     });
     console.log('MongoDB connected');
   } catch (err) {

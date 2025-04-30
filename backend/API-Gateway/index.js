@@ -133,6 +133,8 @@ const express = require('express');
    app.post('/auth/login', forwardToService(AUTH_SERVICE_URL));
    app.post('/auth/refresh', forwardToService(AUTH_SERVICE_URL));
    app.post('/auth/logout', validateToken, forwardToService(AUTH_SERVICE_URL));
+   app.get('/auth/google', forwardToService(AUTH_SERVICE_URL));
+   app.get('/auth/google/callback', forwardToService(AUTH_SERVICE_URL));
    
    
    app.get('/users', validateToken, forwardToService(USER_SERVICE_URL));

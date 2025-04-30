@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const generateJWT = (user) => {
   const payload = { 
     userId: user._id,
-    name: user.name || user.username  // Try to use name, fall back to username if name doesn't exist
+    name: user.name || user.username  
   };
   const secretKey = global.JWT_SECRET;
   const options = { expiresIn: '1h' };

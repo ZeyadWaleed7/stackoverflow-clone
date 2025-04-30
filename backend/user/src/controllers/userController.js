@@ -2,12 +2,26 @@ const User = require('../models/userModel');
 
 exports.createUser = async (req, res) => {
   try {
-    const { username, email, googleId } = req.body;
-    const user = new User({ username, email, googleId });
-    await user.save();
-    res.status(201).json(user);
+    const { name, email, googleId } = req.body;
+
+    // Check if user already exists with this googleId
+    let user = await User.findOne({ googleId: googleId });
+
+    if (user) {
+      // User found, return existing user
+      return res.status(200).json(user);
+    } else {
+      // User not found, create a new one
+      user = new User({ name, email, googleId });
+      await user.save();
+      // Return the newly created user
+      return res.status(201).json(user);
+    }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    // Log the error for debugging purposes
+    console.error("Error in createUser:", error);
+    // Return a generic error message
+    res.status(500).json({ error: 'An internal server error occurred' });
   }
 };
 

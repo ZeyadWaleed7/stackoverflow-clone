@@ -1,19 +1,20 @@
-import './App.css'
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Landing from "./pages/auth/Login/login"
-import Home from "./pages/Home/Home"
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './App.css';
+import GoogleAuthPage from './pages/register';
+import GoogleCallback from './pages/googlecallback';
+import Dashboard from './pages/home/Home';
 
-function App() {
-
+const App = () => {
   return (
-    <HashRouter>
+    <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-        {/* <Route path="/" element={<Landing />} /> */}
-        <Route path="/home" element={<Home />} />
+        {/* <Route path="/" element={<GoogleAuthPage />} />
+        <Route path="/auth/google/callback" element={<GoogleCallback />} /> */}
+        <Route path="/" element={<Dashboard />} />
       </Routes>
-    </HashRouter>
-  )
-}
+    </Router>
+  );
+};
 
-export default App
+export default App;

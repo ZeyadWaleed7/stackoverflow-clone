@@ -14,6 +14,9 @@ const { authenticateJWT } = require('../middlewares/authMiddleware');
 
 router.post('/auth/google', googleAuth);
 
+router.post('/', createUser); 
+
+
 router.get('/userprofile', authenticateJWT, (req, res) => {
   res.json({
     message: 'Token is valid!',

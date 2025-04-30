@@ -26,7 +26,7 @@ exports.googleAuth = async (req, res) => {
     if (!user) {
       user = new User({
         googleId: googleUser.sub,
-        username: googleUser.name,
+        name: googleUser.name,
         email: googleUser.email,
       });
       await user.save();
