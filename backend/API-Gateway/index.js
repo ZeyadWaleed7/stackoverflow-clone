@@ -137,10 +137,11 @@ const express = require('express');
    app.get('/auth/google/callback', forwardToService(AUTH_SERVICE_URL));
    
    
-   app.get('/users', validateToken, forwardToService(USER_SERVICE_URL));
-   app.get('/users/:id', forwardToService(USER_SERVICE_URL));
-   app.put('/users/:id', validateToken, forwardToService(USER_SERVICE_URL));
-   app.get('/users/:id/profile', forwardToService(USER_SERVICE_URL));
+   app.get('/api/users', validateToken, forwardToService(USER_SERVICE_URL));
+   app.get('/api/users/:id', forwardToService(USER_SERVICE_URL));
+   app.put('/api/users/:id', validateToken, forwardToService(USER_SERVICE_URL));
+   app.get('/api/users/:id/profile', forwardToService(USER_SERVICE_URL));
+   
    
    
    app.get('/questions', forwardToService(QA_SERVICE_URL));
