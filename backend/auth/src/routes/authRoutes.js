@@ -12,7 +12,7 @@ router.get('/google/callback',
   passport.authenticate('google', { session: false }),
   (req, res) => {
     const token = req.user.token;
-    res.json({ token }); 
+    res.redirect(`http://localhost:5173/googlecallback?token=${token}`);
   }
 );
 

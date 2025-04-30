@@ -11,9 +11,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<GoogleAuthPage />} />
-        <Route path="/auth/google/callback" element={<GoogleCallback />} /> */}
-        <Route path="/auth/google/callback" element={<GoogleCallback />} />
+        <Route path="/googlecallback" element={<GoogleCallback />} />
         {isAuthenticated ? (
           <Route path="/" element={<Dashboard />} />
         ) : (

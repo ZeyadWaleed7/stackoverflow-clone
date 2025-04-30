@@ -12,37 +12,7 @@ const sampleQuestions = [
 export default function Home() {
     const [searchQuery, setSearchQuery] = useState('');
     const [questions, setQuestions] = useState([]);
-    const [user, setUser] = useState(null);
-
-    const handleSearch = (query) => {
-        setSearchQuery(query.toLowerCase());
-    };
-
-    const filteredQuestions = sampleQuestions.filter(question =>
-        question.title?.toLowerCase().includes(searchQuery) ||
-        question.author?.name?.toLowerCase().includes(searchQuery)
-    );
-
-    useEffect(() => {
-        const fetchUserProfile = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) return;
-
-                const res = await axios.get('http://localhost:8080/api/users/userprofile', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setUser(res.data); // { message, userId, name }
-            } catch (err) {
-                console.error('Error fetching user profile:', err);
-            }
-        };
-
-        fetchUserProfile();
-    }, []);
+    const [loggedInUserName, setLoggedInUserName] = useState(localStorage.getItem('userName') || '');
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -63,6 +33,16 @@ export default function Home() {
         };
         fetchQuestions();
     }, []); // Empty dependency array means this runs once on mount
+    
+    const handleSearch = (query) => {
+        setSearchQuery(query.toLowerCase());
+    };
+
+    const filteredQuestions = sampleQuestions.filter(question =>
+        question.title?.toLowerCase().includes(searchQuery) ||
+        question.author?.name?.toLowerCase().includes(searchQuery)
+    );
+
 
     return (
         <div className="home">
@@ -71,10 +51,9 @@ export default function Home() {
                 <Sidebar />
                 <main className="main-content">
                     
-                    {user && (
+                    {loggedInUserName && (
                         <div className="welcome-banner">
-                            <h2>Welcome, {user.name}!</h2>
-                            <p>User ID: {user.userId}</p>
+                            <h2>Welcome, {loggedInUserName}!</h2>
                         </div>
                     )}
                     <div className="questions-list">
