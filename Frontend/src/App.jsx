@@ -6,15 +6,24 @@ import GoogleCallback from './pages/googlecallback';
 import Dashboard from './pages/home/Home';
 
 const App = () => {
+  const isAuthenticated = !!localStorage.getItem('token');
+  
   return (
     <Router>
       <Routes>
         {/* <Route path="/" element={<GoogleAuthPage />} />
         <Route path="/auth/google/callback" element={<GoogleCallback />} /> */}
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/auth/google/callback" element={<GoogleCallback />} />
+        {isAuthenticated ? (
+          <Route path="/" element={<Dashboard />} />
+        ) : (
+          <Route path="/" element={<GoogleAuthPage />} />
+        )}
       </Routes>
     </Router>
   );
 };
 
 export default App;
+
+
