@@ -9,10 +9,7 @@ const {
   deleteUser
 } = require('../controllers/userController');
 
-const { googleAuth } = require('../controllers/authController');
 const { authenticateJWT } = require('../middlewares/authMiddleware');
-
-router.post('/auth/google', googleAuth);
 
 router.post('/', createUser); 
 

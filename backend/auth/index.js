@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors'); 
 const passport = require('passport');
 const connectDB = require('./src/config/db');
-require('./src/config/passport');
+require('./src/config/googleStrategy');
 
 const authRoutes = require('./src/routes/authRoutes');
 
