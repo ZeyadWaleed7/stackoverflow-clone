@@ -141,19 +141,16 @@ exports.getQuestionById = async (req, res) => {
   try {
     const questionId = req.params.id;
     
-    // 1. Check cache
     const cachedQuestion = await cacheService.getCachedQuestion(questionId);
     if (cachedQuestion) {
       return res.status(200).json(cachedQuestion);
     }
 
-    // 2. Check database
     const question = await Question.findById(questionId);
     if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
 
-    // 3. Cache and return
     await cacheService.cacheQuestion(questionId, question);
     res.status(200).json(question);
   } catch (error) {
@@ -223,14 +220,14 @@ exports.deleteQuestion = async (req, res) => {
 
     // Invalidate both caches
     await cacheService.invalidateQuestionCache(questionId);
-    await cacheService.invalidateQuestionsListCache(); // Add this function
+    await cacheService.invalidateQuestionsListCache();
     
     res.status(200).json({ message: 'Question deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-// Manual Cache Management
+
 exports.getCache = async (req, res) => {
   try {
     const { key } = req.params;
