@@ -1,61 +1,34 @@
-const amqp = require('amqplib');
-const { Server } = require('socket.io');
+require('dotenv').config();
+const express = require('express');
 const http = require('http');
+const cors = require('cors');
+const { Server } = require('socket.io');
+const { connectToRabbitMQ } = require('./config/rabbitmq');
+const { initSocket } = require('./sockets/socketHandler');
+const startConsumer = require('./consumers/notificationConsumer');
+const testRoute = require('./routes/testRoute');
 
-const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://localhost';
-const NOTIFICATION_QUEUE = 'notifications';
-const SOCKET_IO_PORT = process.env.PORT || 3000;
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: '*' }
+});
 
-let channel;
-let io;
+app.use(cors());
+app.use(express.json());
+app.use('/api', testRoute);
 
-async function connectRabbitMQ() {
-  try {
-    const connection = await amqp.connect(RABBITMQ_URL);
-    channel = await connection.createChannel();
-    await channel.assertQueue(NOTIFICATION_QUEUE, { durable: false });
-    console.log(`Connected to RabbitMQ and asserted queue: ${NOTIFICATION_QUEUE}`);
+initSocket(io);
 
-    channel.consume(NOTIFICATION_QUEUE, (msg) => {
-      if (msg !== null) {
-        const notification = JSON.parse(msg.content.toString());
-        console.log('Received notification from RabbitMQ:', notification);
-        io.emit('newNotification', notification);
-        channel.ack(msg);
-      }
-    }, { noAck: false });
+const PORT = process.env.PORT || 4005;
 
-  } catch (error) {
-    console.error('Error connecting to RabbitMQ:', error);
-    process.exit(1);
-  }
-}
+const startApp = async () => {
+  await connectToRabbitMQ();
+  await startConsumer();
 
-function startSocketIO() {
-  const server = http.createServer();
-  io = new Server(server, {
-    cors: {
-      origin: "*", 
-      methods: ["GET", "POST"]
-    }
+  server.listen(PORT, () => {
+    console.log(`Notification Service running on http://localhost:${PORT}`);
   });
+};
 
-  io.on('connection', (socket) => {
-    console.log('A client connected:', socket.id);
-
-    socket.on('disconnect', () => {
-      console.log('Client disconnected:', socket.id);
-    });
-  });
-
-  server.listen(SOCKET_IO_PORT, () => {
-    console.log(`Socket.IO server listening on port ${SOCKET_IO_PORT}`);
-  });
-}
-
-async function startService() {
-  await connectRabbitMQ();
-  startSocketIO();
-}
-
-startService();
+startApp();
