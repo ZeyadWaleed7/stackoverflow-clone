@@ -1,9 +1,11 @@
 {
   "name": "user-service",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -12,10 +14,12 @@
   "devDependencies": {
     "dotenv": "^10.0.0",
     "jest": "^29.7.0",
+    "nodemon": "^3.1.10",
     "supertest": "^7.1.0"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "google-auth-library": "^9.15.1",
     "jsonwebtoken": "^9.0.2",

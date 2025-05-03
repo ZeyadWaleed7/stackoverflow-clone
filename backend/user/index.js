@@ -7,7 +7,7 @@ const userRoutes = require('./src/routes/userRoutes');
 const app = express();
 
 process.env.JWT_SECRET = process.env.JWT_SECRET;
-global.MONGO_URI = process.env.MONGO_URI;
+global.MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/stackoverflow-clone';
 global.PORT = process.env.PORT || 5001;
 global.GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 

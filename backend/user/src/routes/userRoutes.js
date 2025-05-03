@@ -11,9 +11,6 @@ const {
 
 const { authenticateJWT } = require('../middlewares/authMiddleware');
 
-router.post('/', createUser); 
-
-
 router.get('/userprofile', authenticateJWT, (req, res) => {
   res.json({
     message: 'Token is valid!',
@@ -22,6 +19,7 @@ router.get('/userprofile', authenticateJWT, (req, res) => {
   });
 });
 
+// User CRUD operations
 router.post('/', createUser);
 router.get('/', getAllUsers);
 router.get('/:id', authenticateJWT, getUserById);
