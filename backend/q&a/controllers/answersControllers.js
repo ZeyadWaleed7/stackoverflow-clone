@@ -33,10 +33,25 @@ exports.getAnswersByQuestionId = async (req, res) => {
 
 exports.updateAnswer = async (req, res) => {
   try {
-    const answer = await Answer.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const answerId = req.params.id;
+    const { content } = req.body;
+
+    // Find and update the answer in the answers collection
+    const answer = await Answer.findByIdAndUpdate(answerId, { content }, { new: true });
     if (!answer) {
       return res.status(404).json({ error: 'Answer not found' });
     }
+
+    // Find the question associated with the answer and update the answer in the questions collection
+    const question = await Question.findOne({ 'answers._id': answerId });
+    if (!question) {
+      return res.status(404).json({ error: 'Question not found' });
+    }
+
+    // Update the answer in the question's answers array
+    question.answers.id(answerId).content = content;
+    await question.save();
+
     res.status(200).json(answer);
   } catch (error) {
     res.status(400).json({ error: error.message });

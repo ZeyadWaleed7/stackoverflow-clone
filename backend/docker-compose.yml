@@ -22,10 +22,14 @@ services:
       - "5002:5000"
     environment:
       - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379  # Add this line
+
     volumes:
       - ./q&a:/usr/src/app
     networks:
       - app-network
+    depends_on:
+      - redis
 
   
   redis:

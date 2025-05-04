@@ -144,16 +144,24 @@ const express = require('express');
    
    
    
-   app.get('/questions', forwardToService(QA_SERVICE_URL));
-   app.get('/questions/:id', forwardToService(QA_SERVICE_URL));
-   app.post('/questions', validateToken, rateLimiter(5, 60), forwardToService(QA_SERVICE_URL));
-   app.put('/questions/:id', validateToken, forwardToService(QA_SERVICE_URL));
-   app.delete('/questions/:id', validateToken, forwardToService(QA_SERVICE_URL));
-   
-   app.get('/questions/:id/answers', forwardToService(QA_SERVICE_URL));
-   app.post('/questions/:id/answers', validateToken, rateLimiter(10, 60), forwardToService(QA_SERVICE_URL));
-   app.put('/answers/:id', validateToken, forwardToService(QA_SERVICE_URL));
-   app.delete('/answers/:id', validateToken, forwardToService(QA_SERVICE_URL));
+// Changed: Q&A Service Routes
+app.get('/questions', forwardToService(QA_SERVICE_URL)); // Get all questions
+app.get('/questions/:id', forwardToService(QA_SERVICE_URL)); // Get a specific question by ID
+app.post('/questions', validateToken, rateLimiter(5, 60), forwardToService(QA_SERVICE_URL)); // Create a new question
+app.put('/questions/:id', validateToken, forwardToService(QA_SERVICE_URL)); // Update a question by ID
+app.delete('/questions/:id', validateToken, forwardToService(QA_SERVICE_URL)); // Delete a question by ID
+
+app.get('/questions/:id/answers', forwardToService(QA_SERVICE_URL)); // Get all answers for a specific question
+app.post('/questions/:id/answers', validateToken, rateLimiter(10, 60), forwardToService(QA_SERVICE_URL)); // Add an answer to a question
+app.put('/answers/:id', validateToken, forwardToService(QA_SERVICE_URL)); // Update an answer by ID
+app.delete('/answers/:id', validateToken, forwardToService(QA_SERVICE_URL)); // Delete an answer by ID
+
+// Changed: Comment Routes
+app.post('/comments', validateToken, forwardToService(QA_SERVICE_URL)); // Create a comment
+app.get('/comments/question/:questionId', forwardToService(QA_SERVICE_URL)); // Get comments by question ID
+app.get('/comments/answer/:answerId', forwardToService(QA_SERVICE_URL)); // Get comments by answer ID
+app.delete('/comments/:id', validateToken, forwardToService(QA_SERVICE_URL)); // Delete a comment by ID
+
    
  
    app.post('/votes/question/:id', validateToken, rateLimiter(20, 60), forwardToService(VOTE_SERVICE_URL));
