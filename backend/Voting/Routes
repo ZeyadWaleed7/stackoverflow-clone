@@ -1,8 +1,0 @@
-const express = require("express");
-const router = express.Router();
-const voteController = require("../controllers/voteController");
-
-router.put("/:id/question/like", voteController.toggleQuestionLike);
-router.put("/:id/answer/like", voteController.toggleAnswerLike);
-
-module.exports = router;
