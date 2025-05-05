@@ -6,10 +6,11 @@ const { connectClient } = require('./redisClient');
 
 app.use(express.json());
 
+
 connectClient()
   .then(client => {
     console.log('Redis connected in app.js');
-    global.redisClient = client; 
+    global.redisClient = client;
   })
   .catch(err => {
     console.error('Redis connection error in app.js:', err);
@@ -44,32 +45,6 @@ app.post('/questions', async (req, res) => {
   }
 });
 
-
-app.post('/vote', async (req, res) => {
-  try {
-    const { targetId, type, voteType, userId } = req.body;
-    
-    if (!targetId || !type || !voteType || !userId) {
-      return res.status(400).json({ message: 'Missing required fields' });
-    }
-    
-    const client = await connectClient();
-    
-    await client.rPush('voteQueue', JSON.stringify({
-      targetId,
-      type,
-      voteType,
-      userId,
-      timestamp: Date.now()
-    }));
-    
-    res.status(202).json({ message: 'Vote added to queue' });
-  } catch (err) {
-    console.error('Error queuing vote:', err);
-    res.status(500).json({ message: 'Error queuing vote', error: err.message });
-  }
-});
-
 app.get('/questions/:id', async (req, res) => {
   try {
     const question = await Question.findById(req.params.id);
@@ -82,20 +57,33 @@ app.get('/questions/:id', async (req, res) => {
   }
 });
 
+
 app.post('/answers', async (req, res) => {
   try {
     const { answerText, questionId } = req.body;
-    const answer = new Answer({ 
-      answerText, 
+    const answer = new Answer({
+      answerText,
       questionId,
       upvotes: 0,
-      downvotes: 0 
+      downvotes: 0
     });
     await answer.save();
     res.status(201).json(answer);
   } catch (err) {
     console.error('Error creating answer:', err);
     res.status(500).json({ message: 'Error creating answer', error: err.message });
+  }
+});
+
+app.get('/answers/:id', async (req, res) => {
+  try {
+    const answer = await Answer.findById(req.params.id);
+    if (!answer) {
+      return res.status(404).json({ message: 'Answer not found' });
+    }
+    res.json(answer);
+  } catch (err) {
+    res.status(500).json({ message: 'Error retrieving answer', error: err.message });
   }
 });
 
