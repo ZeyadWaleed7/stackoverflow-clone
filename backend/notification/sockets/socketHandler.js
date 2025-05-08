@@ -14,3 +14,4 @@ const emitNotification = (data) => {
 };
 
 module.exports = { initSocket, emitNotification };
+

@@ -1,20 +1,52 @@
 const Answer = require('../models/answerModel');
 const Question = require('../models/questionsModel');
+const { publishToQueue } = require('../config/rabbitmq');
+
+
+// exports.createAnswer = async (req, res) => {
+//   try {
+//     const { questionId, content } = req.body;
+
+    
+//     const answer = new Answer({ questionId, content });
+//     await answer.save();// answer in answers
+
+//     const question = await Question.findById(questionId);
+//     if (!question) {
+//       return res.status(404).json({ error: 'Question not found' });
+//     }
+//     question.answers.push(answer);
+//     await question.save();// answer in questions's answers object
+
+//     res.status(201).json(answer);
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// };
 
 exports.createAnswer = async (req, res) => {
   try {
     const { questionId, content } = req.body;
+    const authorId = req.user?._id || 'anonymous'; // Assuming you have user auth
 
-    
-    const answer = new Answer({ questionId, content });
-    await answer.save();// answer in answers
+    const answer = new Answer({ questionId, content, authorId });
+    await answer.save();
 
     const question = await Question.findById(questionId);
     if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
     question.answers.push(answer);
-    await question.save();// answer in questions's answers object
+    await question.save();
+
+    // Publish answer event
+    await publishToQueue('answer_events', {
+      _id: answer._id,
+      content: answer.content,
+      authorId: answer.authorId,
+      questionId: answer.questionId,
+      createdAt: answer.createdAt
+    });
 
     res.status(201).json(answer);
   } catch (error) {

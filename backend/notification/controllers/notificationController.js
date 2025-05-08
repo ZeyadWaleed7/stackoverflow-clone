@@ -7,7 +7,9 @@ const sendTestNotification = async (req, res) => {
   };
 
   await publishToQueue(data);
-  res.json({ success: true, message: 'Notification sent to queue.' });
+  res.json({ success: true, message: 'Notification sent to queue.' }
+    ,{ noAck: false }
+  );
 };
 
 module.exports = { sendTestNotification };

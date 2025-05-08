@@ -4,6 +4,8 @@ const questionRoutes = require('./routes/questionRoutes');
 const answerRoutes = require('./routes/answerRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const connectDB = require('./config/mongo');
+const { connectToRabbitMQ } = require('./config/rabbitmq'); // Add this
+
 // const { redisClient } = require('./config/redis');
 
 const app = express();
@@ -14,6 +16,17 @@ global.MONGO_URI = 'mongodb+srv://mohyEldeen_1234:1_gfPPvalnw@cluster0.pyjmtip.m
 global.PORT = 5000;
 
 connectDB();
+
+const startServices = async () => {
+  try {
+    // await connectDB();
+    await connectToRabbitMQ(); // Initialize RabbitMQ connection
+    app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
+  } catch (error) {
+    console.error('Failed to start services:', error);
+    process.exit(1);
+  }
+};
 
 app.use(express.json());
 app.use('/api/questions', questionRoutes);
@@ -34,3 +47,4 @@ app.use((err, req, res, next) => {
 console.log("i hope you end up so damn dead man");
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
 
+startServices();

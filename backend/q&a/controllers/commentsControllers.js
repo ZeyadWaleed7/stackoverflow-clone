@@ -1,19 +1,51 @@
 const Comment = require('../models/commentModel');
 const Question = require('../models/questionsModel');
+const { publishToQueue } = require('../config/rabbitmq');
+
+// exports.createComment = async (req, res) => {
+//   try {
+//     const { questionId, answerId, content } = req.body;
+
+//     const comment = new Comment({ questionId, answerId, content });
+//     await comment.save();//to comments collection
+
+//     const question = await Question.findById(questionId);
+//     if (!question) {
+//       return res.status(404).json({ error: 'Question not found' });
+//     }
+//     question.comments.push(comment);
+//     await question.save();// to the comments' object in questions' collection (same as answers)
+
+//     res.status(201).json(comment);
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// };
 
 exports.createComment = async (req, res) => {
   try {
     const { questionId, answerId, content } = req.body;
+    const authorId = req.user?._id || 'anonymous'; // Assuming you have user auth
 
-    const comment = new Comment({ questionId, answerId, content });
-    await comment.save();//to comments collection
+    const comment = new Comment({ questionId, answerId, content, authorId });
+    await comment.save();
 
     const question = await Question.findById(questionId);
     if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
     question.comments.push(comment);
-    await question.save();// to the comments' object in questions' collection (same as answers)
+    await question.save();
+
+    // Publish comment event
+    await publishToQueue('comment_events', {
+      _id: comment._id,
+      content: comment.content,
+      authorId: comment.authorId,
+      questionId: comment.questionId,
+      answerId: comment.answerId,
+      createdAt: comment.createdAt
+    });
 
     res.status(201).json(comment);
   } catch (error) {

@@ -14,35 +14,56 @@ services:
   #   networks:
   #     - app-network
 
-  qa-service:
-    build:
-      context: ./q&a
-      dockerfile: Dockerfile
-    ports:
-      - "5002:5000"
-    environment:
-      - NODE_ENV=production
-      - REDIS_URL=redis://redis:6379  # Add this line
+  # qa-service:
+  #   build:
+  #     context: ./q&a
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5002:5000"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - REDIS_URL=redis://redis:6379  # Add this line
 
-    volumes:
-      - ./q&a:/usr/src/app
-    networks:
-      - app-network
-    depends_on:
-      - redis
+  #   volumes:
+  #     - ./q&a:/usr/src/app
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - redis
 
   
-  redis:
-    image: redis:7
-    container_name: redis
-    ports:
-    - "6379:6379"
+  # redis:
+  #   image: redis:7
+  #   container_name: redis
+  #   ports:
+  #   - "6379:6379"
 
-  mongo:
-    image: mongo:6
-    container_name: mongo
+  # mongo:
+  #   image: mongo:6
+  #   container_name: mongo
+  #   ports:
+  #     - "27017:27017"
+
+  notification-service:
+    build:
+      context: ./notification
+      dockerfile: Dockerfile    
     ports:
-      - "27017:27017"
+      - "4005:4005"
+    environment:
+      - PORT=4005
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - QUEUE_NAME=notification_queue
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672" 
+      - "15673:15672"  
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
 
 
@@ -67,4 +88,6 @@ networks:
 
 
 volumes:
-  mongo-data:
+  # mongo-data:
+  rabbitmq_data:
+  # redis_data:

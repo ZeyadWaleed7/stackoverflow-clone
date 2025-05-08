@@ -3,6 +3,8 @@ const Question = require('../models/questionsModel');
 const Answer = require('../models/answerModel');
 const Comment = require('../models/commentModel');
 const cacheService = require('../services/cacheService');
+const { publishToQueue } = require('../config/rabbitmq');
+
 
 // Helper function to generate cache key
 // function getCacheKey(title, description) {
