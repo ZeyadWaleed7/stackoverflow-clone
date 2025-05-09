@@ -36,6 +36,8 @@ app.use('/api', testRoute);
 initSocket(io);
 
 const PORT = process.env.PORT || 4005;
+const MPORT = process.env.MPORT || 15673;
+
 
 const startApp = async () => {
   try {
@@ -50,6 +52,8 @@ const startApp = async () => {
       console.log(`least but not last`);
 
       console.log(`Notification Service running on http://localhost:${PORT}`);
+      console.log(`RabbitMQ UI running on http://localhost:${MPORT}`);
+
       console.log('Listening for:');
       console.log(`- Notifications on queue: ${global.NOTIFICATION_QUEUE}`);
       console.log(`- Answers on queue: ${global.ANSWER_QUEUE}`);
