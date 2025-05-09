@@ -15,13 +15,19 @@ const VOTE_SERVICE_URL = process.env.VOTE_SERVICE_URL || 'http://vote-service:80
 const redisClient = redis.createClient({ url: process.env.REDIS_URL || 'redis://redis:6379' });
 redisClient.connect().then(() => console.log('Connected to Redis'));
 
-const jwtSecretKey = process.env.JWT_SECRET_KEY;
+const jwtSecretKey = process.env.JWT_SECRET_KEY || process.env.JWT_SECRET;
 const tokenHeaderKey = process.env.TOKEN_HEADER_KEY || 'auth-token';
 
 
 const validateToken = (req, res, next) => {
     const token = req.header(tokenHeaderKey);
     if (!token) return res.status(403).send("Token missing");
+
+    if (!jwtSecretKey) {
+        console.error("JWT secret key is not defined in environment variables");
+        return res.status(500).send("Server configuration error");
+    }
+
     try {
         const verified = jwt.verify(token, jwtSecretKey);
         req.user = verified;
