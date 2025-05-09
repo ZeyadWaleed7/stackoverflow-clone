@@ -47,6 +47,8 @@ const startApp = async () => {
     await startCommentConsumer();
 
     server.listen(PORT, () => {
+      console.log(`least but not last`);
+
       console.log(`Notification Service running on http://localhost:${PORT}`);
       console.log('Listening for:');
       console.log(`- Notifications on queue: ${global.NOTIFICATION_QUEUE}`);

@@ -13,36 +13,24 @@ services:
   #     - ./Auth-service:/usr/src/app
   #   networks:
   #     - app-network
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672" 
+      - "15673:15672"  
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+    - "6379:6379"
 
-  # qa-service:
-  #   build:
-  #     context: ./q&a
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "5002:5000"
-  #   environment:
-  #     - NODE_ENV=production
-  #     - REDIS_URL=redis://redis:6379  # Add this line
-
-  #   volumes:
-  #     - ./q&a:/usr/src/app
-  #   networks:
-  #     - app-network
-  #   depends_on:
-  #     - redis
-
-  
-  # redis:
-  #   image: redis:7
-  #   container_name: redis
-  #   ports:
-  #   - "6379:6379"
-
-  # mongo:
-  #   image: mongo:6
-  #   container_name: mongo
-  #   ports:
-  #     - "27017:27017"
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    ports:
+      - "27017:27017"
 
   notification-service:
     build:
@@ -57,18 +45,27 @@ services:
     depends_on:
       - rabbitmq
 
-  rabbitmq:
-    image: rabbitmq:3-management
+
+  qa-service:
+    build:
+      context: ./q&a
+      dockerfile: Dockerfile
     ports:
-      - "5672:5672" 
-      - "15673:15672"  
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-
-
-
-
-
+      - "5002:5000"
+    environment:
+      - PORT = 5002
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379  # Add this line
+    depends_on:
+      - rabbitmq
+      - redis
+      - notification-service
+  #   volumes:
+  #     - ./q&a:/usr/src/app
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - redis
   # user-service:
   #   build:
   #     context: ./UserService
