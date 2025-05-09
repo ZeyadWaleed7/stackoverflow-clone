@@ -9,12 +9,14 @@ services:
       - JWT_SECRET_KEY=ff08c538111579e6c1408a01fae062b4474b2f35affc64dcc3c2f3f58ef03de9
       - TOKEN_HEADER_KEY=auth-token
       - REDIS_URL=redis://redis:6379
-      - AUTH_SERVICE_URL=http://auth-service:8081
-      - USER_SERVICE_URL=http://user-service:8082
+      - AUTH_SERVICE_URL=http://auth-service:5000
+      - USER_SERVICE_URL=http://user-service:5001
       - QA_SERVICE_URL=http://qa-service:8083
       - VOTE_SERVICE_URL=http://vote-service:8084
     depends_on:
       - redis
+      - auth-service
+      - user-service
     networks:
       - app-network
 
@@ -23,7 +25,40 @@ services:
     networks:
       - app-network
 
+  auth-service:
+    build: ../auth
+    environment:
+      - PORT=5000
+      - JWT_SECRET=ff08c538111579e6c1408a01fae062b4474b2f35affc64dcc3c2f3f58ef03de9
+      - MONGO_URI=mongodb://mongo:27017/stackoverflow-auth
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  user-service:
+    build: ../user
+    environment:
+      - PORT=5001
+      - JWT_SECRET=ff08c538111579e6c1408a01fae062b4474b2f35affc64dcc3c2f3f58ef03de9
+      - MONGO_URI=mongodb://mongo:27017/stackoverflow-users
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mongo-data:
+
 

@@ -58,7 +58,6 @@ const Profile = () => {
             }
 
             setError('');
-            // Use the accessToken from context instead of calling getValidToken()
             const token = accessToken;
 
             if (!token) {
