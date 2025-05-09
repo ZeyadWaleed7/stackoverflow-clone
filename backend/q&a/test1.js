@@ -4,7 +4,7 @@ const questionRoutes = require('./routes/questionRoutes');
 const answerRoutes = require('./routes/answerRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const connectDB = require('./config/mongo');
-const { connectToRabbitMQ } = require('./config/rabbitmq'); // Add this
+const { connectToRabbitMQ } = require('./config/rabbitmq'); 
 
 // const { redisClient } = require('./config/redis');
 
