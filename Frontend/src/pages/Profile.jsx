@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { FaUser, FaEnvelope, FaCalendarAlt, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 import './Profile.css';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-    const { accessToken, user: authUser, updateUser: updateAuthUser } = useAuth();
+    const { accessToken, user: authUser, updateUser: updateAuthUser, logout } = useAuth();
     const [user, setUser] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [editedName, setEditedName] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserProfile();
@@ -56,14 +58,30 @@ const Profile = () => {
             }
 
             setError('');
+            // Use the accessToken from context instead of calling getValidToken()
+            const token = accessToken;
+
+            if (!token) {
+                logout();
+                navigate('/');
+                throw new Error('Authentication failed. Please log in again.');
+            }
+
             const response = await fetch(`http://localhost:5001/api/users/${user.userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ name: editedName })
             });
+
+            if (response.status === 401) {
+                console.log('Token expired or invalid - logging out');
+                logout();
+                navigate('/');
+                throw new Error('Session expired. Please log in again.');
+            }
 
             if (!response.ok) {
                 const errorData = await response.json();
