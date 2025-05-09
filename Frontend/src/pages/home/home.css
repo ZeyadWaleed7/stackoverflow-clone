@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.home {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    background-color: #FFFFFF;
+}
+
+.home-content {
+    display: flex;
+    padding-top: 16px;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 390px;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.questions-list {
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+} 

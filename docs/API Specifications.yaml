@@ -1,0 +1,384 @@
+openapi: 3.0.3
+info:
+  title: Stack Overflow Clone API
+  description: API for a Stack Overflow Clone application, allowing users to authenticate, post questions and answers, vote, search, and receive notifications.
+  version: 1.0.0
+
+servers:
+  - url: https://api.stackoverflowclone.com/v1
+    description: Production server
+
+paths:
+  /auth/google:
+    post:
+      summary: Authenticate using Google OAuth2
+      description: Authenticates a user using Google OAuth2 and returns a JWT token for session management.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: Authorization code from Google OAuth2
+              required:
+                - code
+      responses:
+        "200":
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT token for the authenticated user
+        "401":
+          description: Unauthorized - Invalid or missing authorization code
+
+  /users/{id}:
+    get:
+      summary: Get user profile
+      description: Retrieves the profile of a specific user, including their reputation score.
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  username:
+                    type: string
+                  reputation:
+                    type: integer
+        "404":
+          description: User not found
+
+  /questions:
+    post:
+      summary: Create a question
+      description: Creates a new question in the system.
+      tags:
+        - Questions
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - title
+                - body
+      responses:
+        "201":
+          description: Question created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: string
+        "400":
+          description: Bad request - Missing required fields
+    get:
+      summary: Fetch all questions
+      description: Retrieves a list of questions, with optional search filters.
+      tags:
+        - Questions
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Keyword to search for in question titles or tags
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    body:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+
+  /questions/{id}:
+    get:
+      summary: Fetch a specific question
+      description: Retrieves the details of a specific question by its ID.
+      tags:
+        - Questions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the question
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: string
+        "404":
+          description: Question not found
+
+  /questions/{id}/answers:
+    post:
+      summary: Add an answer to a question
+      description: Posts a new answer to a specific question.
+      tags:
+        - Answers
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body
+      responses:
+        "201":
+          description: Answer created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  body:
+                    type: string
+                  questionId:
+                    type: string
+        "400":
+          description: Bad request - Missing required fields
+        "404":
+          description: Question not found
+    get:
+      summary: Fetch answers for a question
+      description: Retrieves all answers for a specific question.
+      tags:
+        - Answers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the question
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    body:
+                      type: string
+                    questionId:
+                      type: string
+        "404":
+          description: Question not found
+
+  /questions/{id}/vote:
+    post:
+      summary: Upvote or downvote a question
+      description: Allows a user to upvote or downvote a question.
+      tags:
+        - Votes
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                voteType:
+                  type: string
+                  enum: [upvote, downvote]
+              required:
+                - voteType
+      responses:
+        "200":
+          description: Vote recorded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  voteCount:
+                    type: integer
+        "400":
+          description: Bad request - Invalid vote type
+        "404":
+          description: Question not found
+
+  /answers/{id}/vote:
+    post:
+      summary: Upvote or downvote an answer
+      description: Allows a user to upvote or downvote an answer.
+      tags:
+        - Votes
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the answer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                voteType:
+                  type: string
+                  enum: [upvote, downvote]
+              required:
+                - voteType
+      responses:
+        "200":
+          description: Vote recorded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  voteCount:
+                    type: integer
+        "400":
+          description: Bad request - Invalid vote type
+        "404":
+          description: Answer not found
+
+  /notifications:
+    get:
+      summary: Fetch user notifications
+      description: Retrieves real-time notifications for the authenticated user.
+      tags:
+        - Notifications
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    message:
+                      type: string
+                    createdAt:
+                      type: string
+                      format: date-time
+        "401":
+          description: Unauthorized - Missing or invalid token
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

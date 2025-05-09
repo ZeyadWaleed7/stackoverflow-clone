@@ -1,0 +1,155 @@
+.question-card {
+    padding: 20px;
+    border-bottom: 1px solid #EFF0F1;
+}
+
+.question-main {
+    display: flex;
+    gap: 20px;
+}
+
+.question-content {
+    flex: 1;
+}
+
+.tags {
+    display: flex;
+    gap: 8px;
+}
+
+.tag {
+    background-color: #f1f2f3;
+    color: black;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.timestamp {
+    color: #6A737C;
+    font-size: 12px;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.author-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    color: #2F3337;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.author-reputation {
+    color: #6A737C;
+    font-size: 12px;
+}
+
+.question-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2F3337;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.question-title:hover {
+    color: #F48024;
+}
+
+.question-excerpt {
+    font-size: 13px;
+    color: #2F3337;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.additional-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.question-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 60px;
+}
+
+.voting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.vote-button {
+    background: none;
+    border: none;
+    color: #6A737C;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s ease;
+}
+
+.vote-button:hover {
+    color: #F48024;
+}
+
+.vote-button.active {
+    color: #F48024;
+}
+
+.vote-count {
+    color: #2F3337;
+    font-size: 14px;
+}
+
+.comments {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #6A737C;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .question-main {
+        flex-direction: column;
+    }
+
+    .question-stats {
+        flex-direction: row;
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+
+    .question-title {
+        font-size: 16px;
+    }
+
+    .question-excerpt {
+        font-size: 12px;
+    }
+} 
