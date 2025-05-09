@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.10.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    networks:
+      - search-network
+
+  search-service:
+    build: ./search-service
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - QA_SERVICE_URL=http://host.docker.internal:5000
+    depends_on:
+      - elasticsearch
+    networks:
+      - search-network
+
+networks:
+  search-network:
+    driver: bridge
