@@ -1,28 +1,26 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';
 
-const Logout = () => {
+const Logout = ({ className }) => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    // Clear all authentication data from localStorage
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('isAuthenticated');
+    // Use the logout function from AuthContext
+    logout();
 
-    console.log('User logged out successfully');
-
-    // Force a full page reload to update auth state across the app
+    // Navigate to home page
     window.location.href = '/';
   };
 
   return (
     <button
       onClick={handleLogout}
-      className="logout-button"
+      className={className}
     >
-      Logout
+      <FaSignOutAlt /> Logout
     </button>
   );
 };

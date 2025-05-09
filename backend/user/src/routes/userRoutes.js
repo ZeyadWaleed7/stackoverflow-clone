@@ -6,18 +6,13 @@ const {
   getAllUsers,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  getUserProfile
 } = require('../controllers/userController');
 
 const { authenticateJWT } = require('../middlewares/authMiddleware');
 
-router.get('/userprofile', authenticateJWT, (req, res) => {
-  res.json({
-    message: 'Token is valid!',
-    userId: req.user.userId,
-    name: req.user.name
-  });
-});
+router.get('/userprofile', authenticateJWT, getUserProfile);
 
 // User CRUD operations
 router.post('/', createUser);

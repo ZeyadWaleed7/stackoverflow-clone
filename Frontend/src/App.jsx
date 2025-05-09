@@ -1,39 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import GoogleAuthPage from './pages/register';
 import GoogleCallback from './pages/googlecallback';
 import Dashboard from './pages/home/Home';
+import Profile from './pages/Profile';
+import Navbar from './components/Navbar';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { SearchProvider, useSearch } from './context/SearchContext';
 
-const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('authToken'));
+// Protected route component
+const ProtectedRoute = ({ children }) => {
+  const { accessToken } = useAuth();
 
-  useEffect(() => {
-    // check authentication status
-    const checkAuthStatus = () => {
-      setIsAuthenticated(!!localStorage.getItem('authToken'));
-    };
-    checkAuthStatus();
+  if (!accessToken) {
+    return <Navigate to="/" replace />;
+  }
 
-    // Listen for storage events (login/logout happens in another tab)
-    window.addEventListener('storage', checkAuthStatus);
+  return children;
+};
 
-    return () => {
-      window.removeEventListener('storage', checkAuthStatus);
-    };
-  }, []);
+const AppRoutes = () => {
+  const { accessToken } = useAuth();
+  const { handleSearch } = useSearch();
 
   return (
-    <Router>
+    <>
+      {accessToken && <Navbar onSearch={handleSearch} />}
       <Routes>
         <Route path="/googlecallback" element={<GoogleCallback />} />
-        {isAuthenticated ? (
-          <Route path="/" element={<Dashboard />} />
+        {accessToken ? (
+          <>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+          </>
         ) : (
           <Route path="/" element={<GoogleAuthPage />} />
         )}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </Router>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <AuthProvider>
+      <SearchProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </SearchProvider>
+    </AuthProvider>
   );
 };
 

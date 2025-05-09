@@ -1,60 +1,126 @@
 const User = require('../models/userModel');
+const { validateEmail } = require('../utils/validationUtils');
 
 exports.createUser = async (req, res) => {
   try {
-    const { name, email, googleId } = req.body;
+    const { name, email, googleId, image, bio } = req.body;
 
-    // Check if user already exists with this googleId
-    let user = await User.findOne({ googleId: googleId });
-
-    if (user) {
-      // User found, return existing user
-      return res.status(200).json(user);
-    } else {
-      // User not found, create a new one
-      user = new User({ name, email, googleId });
-      await user.save();
-      // Return the newly created user
-      return res.status(201).json(user);
+    // Validate input
+    if (!name || !email || !googleId) {
+      return res.status(400).json({ error: 'Name, email, and googleId are required' });
     }
+
+    if (!validateEmail(email)) {
+      return res.status(400).json({ error: 'Invalid email format' });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({
+      $or: [
+        { email: email.toLowerCase() },
+        { googleId: googleId }
+      ]
+    });
+
+    if (existingUser) {
+      return res.status(200).json(existingUser);
+    }
+
+    // Create new user with all fields
+    const user = new User({
+      name,
+      email: email.toLowerCase(),
+      googleId,
+      image,
+      bio,
+      reputation: 0,
+      lastLogin: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    await user.save();
+    return res.status(201).json(user);
   } catch (error) {
-    // Log the error for debugging purposes
     console.error("Error in createUser:", error);
-    // Return a generic error message
+    if (error.code === 11000) {
+      return res.status(400).json({ error: 'User with this email or Google ID already exists' });
+    }
     res.status(500).json({ error: 'An internal server error occurred' });
   }
 };
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().select('-password');
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error in getAllUsers:", error);
+    res.status(500).json({ error: 'Failed to fetch users' });
   }
 };
 
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select('-__v');
+    const user = await User.findById(req.params.id).select('-password');
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error in getUserById:", error);
+    if (error.name === 'CastError') {
+      return res.status(400).json({ error: 'Invalid user ID format' });
+    }
+    res.status(500).json({ error: 'Failed to fetch user' });
   }
 };
 
 exports.updateUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { name, email, bio, image } = req.body;
+    const updates = {};
+
+    // Validate updates
+    if (name) {
+      if (name.length < 2) {
+        return res.status(400).json({ error: 'Name must be at least 2 characters long' });
+      }
+      updates.name = name;
+    }
+
+    if (email) {
+      if (!validateEmail(email)) {
+        return res.status(400).json({ error: 'Invalid email format' });
+      }
+      updates.email = email.toLowerCase();
+    }
+
+    if (bio !== undefined) {
+      updates.bio = bio;
+    }
+
+    if (image !== undefined) {
+      updates.image = image;
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: updates },
+      { new: true, runValidators: true }
+    ).select('-password');
+
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
+
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error in updateUser:", error);
+    if (error.code === 11000) {
+      return res.status(400).json({ error: 'Email already in use' });
+    }
+    res.status(500).json({ error: 'Failed to update user' });
   }
 };
 
@@ -66,26 +132,57 @@ exports.deleteUser = async (req, res) => {
     }
     res.status(200).json({ message: 'User deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error in deleteUser:", error);
+    res.status(500).json({ error: 'Failed to delete user' });
   }
 };
-
 
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
     if (!user) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+
+    const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
-    const token = generateJWT(user);
-    res.status(200).json({ token });
+
+    // Update last login
+    await user.updateLastLogin();
+
+    // Return user data without password
+    const userData = user.toJSON();
+    res.status(200).json(userData);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error in loginUser:", error);
+    res.status(500).json({ error: 'Login failed' });
+  }
+};
+
+exports.getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({
+      userId: user._id,
+      email: user.email,
+      name: user.name,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    });
+  } catch (error) {
+    console.error('Error in getUserProfile:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 

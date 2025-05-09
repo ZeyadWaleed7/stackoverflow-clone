@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../context/AuthContext';
 
 const GoogleCallback = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const { login } = useAuth();
 
   useEffect(() => {
     const handleCallback = async () => {
       try {
-        // Get token from URL
         const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
+        const accessToken = urlParams.get('accessToken');
+        const refreshToken = urlParams.get('refreshToken');
+        const userImage = urlParams.get('userImage');
 
-        if (!token) {
-          console.error('No token found in URL');
-          setError('Authentication failed. No token received.');
+        if (!accessToken || !refreshToken) {
+          setError('Authentication failed. No tokens received.');
           return;
         }
 
-        console.log('Token received from Google callback');
+        // Decode access token to get user information
+        const decodedToken = jwtDecode(accessToken);
 
-        // Store the token in localStorage
-        localStorage.setItem('authToken', token);
+        // Use the AuthContext to login
+        login(
+          { accessToken, refreshToken },
+          {
+            name: decodedToken.name,
+            userId: decodedToken.userId,
+            image: userImage
+          }
+        );
 
-        // Decode the token to get user information
-        const decodedToken = jwtDecode(token);
-        console.log('User authenticated:', decodedToken.name);
-
-        // Store user information
-        localStorage.setItem('userName', decodedToken.name);
-        localStorage.setItem('userId', decodedToken.userId);
-        localStorage.setItem('isAuthenticated', 'true');
-
-        // page reload to update auth state
-        window.location.href = '/';
+        // Redirect to home page
+        navigate('/');
       } catch (error) {
         console.error('Error processing authentication:', error);
         setError('Authentication failed. Please try again.');
@@ -42,7 +43,7 @@ const GoogleCallback = () => {
     };
 
     handleCallback();
-  }, [navigate]);
+  }, [navigate, login]);
 
   if (error) {
     return (
