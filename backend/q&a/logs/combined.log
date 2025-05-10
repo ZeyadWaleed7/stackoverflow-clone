@@ -1,13 +1,6 @@
-2025-05-10 21:26:27 [[32minfo[39m] Redis connecting...
-2025-05-10 21:26:27 [[32minfo[39m] Redis ready
-2025-05-10 21:26:27 [[32minfo[39m] Redis connected successfully
-2025-05-10 21:26:56 [[32minfo[39m] Cached questions list all_questions
-2025-05-10 21:27:48 [[32minfo[39m] Invalidated cache for question 681e2b44e56274555eefd1f7, deleted: 1
-2025-05-10 21:28:02 [[32minfo[39m] Cached question 681e2b44e56274555eefd1f7
-2025-05-10 21:28:23 [[32minfo[39m] Cached question 681e761e53af4210c0e21d5f
-2025-05-10 21:36:38 [[32minfo[39m] Cached question 681f9c96526e267834cc7d6f
-2025-05-10 21:36:54 [[32minfo[39m] Invalidated cache for question 681f9c96526e267834cc7d6f, deleted: 1
-2025-05-10 21:59:00 [[32minfo[39m] Redis connecting...
-2025-05-10 21:59:01 [[32minfo[39m] Redis ready
-2025-05-10 21:59:01 [[32minfo[39m] Redis connected successfully
-2025-05-10 22:00:31 [[32minfo[39m] Cached questions list all_questions
+2025-05-10 23:04:49 [[33mwarn[39m] Redis reconnecting attempt 0, next try in 0ms
+2025-05-10 23:05:19 [[32minfo[39m] Redis connecting...
+2025-05-10 23:06:24 [[32minfo[39m] Redis connecting...
+2025-05-10 23:06:24 [[32minfo[39m] Redis ready
+2025-05-10 23:06:24 [[32minfo[39m] Redis connected successfully
+2025-05-10 23:09:54 [[32minfo[39m] Cached questions list all_questions

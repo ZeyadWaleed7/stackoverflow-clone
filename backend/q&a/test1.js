@@ -5,6 +5,7 @@ const answerRoutes = require('./routes/answerRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const connectDB = require('./config/mongo');
 const { connectToRabbitMQ } = require('./config/rabbitmq'); 
+console.log("l");
 
 // const { redisClient } = require('./config/redis');
 

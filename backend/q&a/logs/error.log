@@ -1,0 +1,2 @@
+2025-05-10 23:04:49 [[31merror[39m] Error: connect ECONNREFUSED ::1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1615:16)
