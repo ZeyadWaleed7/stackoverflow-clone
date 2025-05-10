@@ -11,6 +11,7 @@ const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://user-service:50
 const QA_SERVICE_URL = process.env.QA_SERVICE_URL || 'http://qa-service:8083';
 const VOTE_SERVICE_URL = process.env.VOTE_SERVICE_URL || 'http://vote-service:8084';
 const SEARCH_SERVICE_URL = process.env.SEARCH_SERVICE_URL || 'http://search-service:5002';
+const NOTIFICATION_SERVICE_URL = process.env.NOTIFICATION_SERVICE_URL || 'http://notification-service:4005';
 
 // CORS configuration
 app.use((req, res, next) => {
@@ -279,6 +280,10 @@ app.get('/votes/user/:id', validateToken, forwardToService(VOTE_SERVICE_URL));
 
 app.post('/api/search/index', validateToken, forwardToService(SEARCH_SERVICE_URL)); 
 app.get('/api/search/search', forwardToService(SEARCH_SERVICE_URL)); 
+
+app.post('/api/notify', validateToken, forwardToService(NOTIFICATION_SERVICE_URL)); 
+app.get('/api/health', forwardToService(NOTIFICATION_SERVICE_URL)); 
+app.get('/api/clients', forwardToService(NOTIFICATION_SERVICE_URL));
 
 // Global error handler
 app.use((err, req, res, next) => {
