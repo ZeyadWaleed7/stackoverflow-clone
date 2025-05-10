@@ -39,6 +39,9 @@ const refreshAccessToken = (refreshToken) => {
 
     return generateTokenPair(decoded.userId, decoded.name);
   } catch (error) {
+    if (error.message === 'Invalid token type') {
+      throw error;
+    }
     throw new Error('Invalid refresh token');
   }
 };

@@ -1,5 +1,17 @@
 const client = require('../config/elasticsearch');
 const { fetchQuestions } = require('../services/questionservice');
+const validator = require('validator');
+
+// Sanitize and validate search parameters to prevent XSS attacks
+const sanitizeSearchParams = (query, tags) => {
+  const sanitizedQuery = query ? validator.escape(query.trim()) : '';
+  const sanitizedTags = tags ? tags.split(',').map(tag => validator.escape(tag.trim())).filter(Boolean) : [];
+
+  return {
+    query: sanitizedQuery,
+    tags: sanitizedTags
+  };
+};
 
 exports.indexQuestions = async (req, res) => {
   try {
@@ -37,21 +49,24 @@ exports.searchQuestions = async (req, res) => {
   try {
     const { query, tags } = req.query;
 
+    // Sanitize and validate input
+    const { query: sanitizedQuery, tags: sanitizedTags } = sanitizeSearchParams(query, tags);
+
     // Build the Elasticsearch query
     const searchQuery = {
       index: 'questions',
       body: {
         query: {
           bool: {
-            must: query ? {
+            must: sanitizedQuery ? {
               multi_match: {
-                query,
+                query: sanitizedQuery,
                 fields: ['title^2', 'description', 'answers', 'comments'],
                 fuzziness: 'AUTO',
               },
             } : undefined,
-            filter: tags ? {
-              terms: { tags: tags.split(',') }
+            filter: sanitizedTags.length > 0 ? {
+              terms: { tags: sanitizedTags }
             } : undefined,
           },
         },

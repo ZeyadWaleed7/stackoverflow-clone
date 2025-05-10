@@ -12,7 +12,8 @@
     "@elastic/elasticsearch": "^8.10.0",
     "axios": "^1.6.0",
     "dotenv": "^16.3.1",
-    "amqplib": "^0.10.3"
+    "amqplib": "^0.10.3",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
