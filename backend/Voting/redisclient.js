@@ -1,5 +1,6 @@
 const redis = require('redis');
 let clientInstance = null;
+
 const client = redis.createClient({ 
   url: 'redis://localhost:6379',
   socket: {
@@ -16,11 +17,9 @@ const client = redis.createClient({
 client.on('error', (err) => {
   console.error('Redis client error:', err);
 });
-
 client.on('reconnecting', () => {
   console.log('Redis client reconnecting...');
 });
-
 client.on('connect', () => {
   console.log('Redis client connected');
 });
