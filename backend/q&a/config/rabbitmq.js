@@ -1,4 +1,3 @@
-// backend/q&a/config/rabbitmq.js
 const amqp = require('amqplib');
 require('dotenv').config();
 

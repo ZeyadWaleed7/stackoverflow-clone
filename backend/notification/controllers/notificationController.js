@@ -14,7 +14,6 @@
 
 // module.exports = { sendTestNotification };
 
-// backend/notification/controllers/notificationController.js
 const publishToQueue = require('../utils/messageQueue');
 
 const sendTestNotification = async (req, res) => {

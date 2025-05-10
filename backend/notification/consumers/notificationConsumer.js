@@ -1,4 +1,3 @@
-// backend/notification/consumers/notificationConsumer.js
 const { getChannel, QUEUE_NAMES } = require('../config/rabbitmq');
 const { emitNotification } = require('../sockets/socketHandler');
 

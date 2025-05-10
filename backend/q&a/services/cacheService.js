@@ -40,24 +40,24 @@ module.exports = {
     return cached ? JSON.parse(cached) : null;
   },
 
-  cacheFrequentQuestion: async (questionId, questionData) => {
-    await setAsync(`frequent:question:${questionId}`, JSON.stringify(questionData), {
-      EX: CACHE_TTL.FREQUENT_QUESTIONS
-    });
-  },
+  // cacheFrequentQuestion: async (questionId, questionData) => {
+  //   await setAsync(`frequent:question:${questionId}`, JSON.stringify(questionData), {
+  //     EX: CACHE_TTL.FREQUENT_QUESTIONS
+  //   });
+  // },
 
-  getCachedFrequentQuestion: async (questionId) => {
-    const cached = await getAsync(`frequent:question:${questionId}`);
-    return cached ? JSON.parse(cached) : null;
-  },
+  // getCachedFrequentQuestion: async (questionId) => {
+  //   const cached = await getAsync(`frequent:question:${questionId}`);
+  //   return cached ? JSON.parse(cached) : null;
+  // },
 
-  getCacheStats: async () => {
-    const keys = await redisClient.keys('*');
-    return {
-      totalCachedItems: keys.length,
-      // Add more stats as needed
-    };
-  },
+  // getCacheStats: async () => {
+  //   const keys = await redisClient.keys('*');
+  //   return {
+  //     totalCachedItems: keys.length,
+  //     // Add more stats as needed
+  //   };
+  // },
 
   cacheQuestionsList: async (key, questions) => {
     await setAsync(`questions:${key}`, JSON.stringify(questions), CACHE_TTL.QUESTIONS_LIST);

@@ -20,7 +20,7 @@ connectDB();
 const startServices = async () => {
   try {
     // await connectDB();
-    await connectToRabbitMQ(); // Initialize RabbitMQ connection
+    await connectToRabbitMQ();
     app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
   } catch (error) {
     console.error('Failed to start services:', error);
