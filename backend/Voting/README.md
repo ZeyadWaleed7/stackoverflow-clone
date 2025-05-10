@@ -11,13 +11,7 @@
 ## 🛠️ Setup Instructions
 
 
-### 1. **Install Dependencies**
-
-```bash
-npm install
-```
-
-### 2. **Start Redis Server**
+### 1. **Start Redis Server**
 
 Make sure you have Redis installed. Start the Redis server:
 
@@ -25,8 +19,7 @@ Make sure you have Redis installed. Start the Redis server:
 redis-server
 ```
 
-
-### 3. **Start MongoDB**
+### 2. **Start MongoDB**
 
 You can use a local MongoDB instance 
 
@@ -35,7 +28,7 @@ mongod
 ```
 
 
-### 4. **Run the Application**
+### 3. **Run the Application**
 
 Start the Express app:
 

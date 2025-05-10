@@ -58,6 +58,7 @@ retryClient.on('error', (err) => {
   console.error('Retry Redis error', err);
 });
 
+
 async function connectRedis() {
   try {
     await redisClient.connect();
@@ -67,6 +68,7 @@ async function connectRedis() {
     process.exit(1);
   }
 }
+
 
 async function saveVote(vote) {
   const { targetId, type, voteType } = vote;
@@ -95,8 +97,7 @@ async function saveVote(vote) {
 }
 
 async function processVoteQueue() {
-  console.log('Worker is listening for votes...');
-  
+  console.log('Worker is listening for votes...');  
   while (true) {
     try {
       if (!redisClient.isOpen) {
@@ -137,6 +138,7 @@ async function processVoteQueue() {
     }
   }
 }
+
 
 async function processRetryQueue() {
   try {

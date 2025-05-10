@@ -1,11 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const voteRoutes = require('./routes/vote.route');
-const { connectClient } = require('./redisClient');
+const voteRoutes = require('./routes/voteRoute');
+const { connectClient } = require('./redisclient');
 
 app.use(express.json());
-
 
 connectClient()
   .then(client => {
@@ -28,12 +27,12 @@ const Question = require('./models/Question');
 const Answer = require('./models/Answer.model');
 
 
+
 app.post('/questions', async (req, res) => {
   try {
-    const { question, options } = req.body;
+    const { question } = req.body;
     const newQuestion = new Question({
       question,
-      options,
       upvotes: 0,
       downvotes: 0
     });
@@ -44,6 +43,7 @@ app.post('/questions', async (req, res) => {
     res.status(500).json({ message: 'Error creating question', error: err.message });
   }
 });
+
 
 app.get('/questions/:id', async (req, res) => {
   try {
@@ -56,6 +56,7 @@ app.get('/questions/:id', async (req, res) => {
     res.status(500).json({ message: 'Error retrieving question', error: err.message });
   }
 });
+
 
 
 app.post('/answers', async (req, res) => {
@@ -75,6 +76,7 @@ app.post('/answers', async (req, res) => {
   }
 });
 
+
 app.get('/answers/:id', async (req, res) => {
   try {
     const answer = await Answer.findById(req.params.id);
@@ -87,11 +89,13 @@ app.get('/answers/:id', async (req, res) => {
   }
 });
 
+
 app.get('/', (req, res) => {
+  console.log('GET / called');
   res.send('Server is up and MongoDB/Redis are connected!');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

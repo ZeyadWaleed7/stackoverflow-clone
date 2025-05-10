@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { connectClient } = require("../redisClient");
+const { connectClient } = require("../redisclient");
 
 
 const addToVoteQueue = async (voteData) => {
@@ -17,12 +17,9 @@ const addToVoteQueue = async (voteData) => {
 
 
 router.post('/', async (req, res) => {
-  console.log('Received vote request:', req.body);
-  
+  console.log('Received vote request:', req.body);  
   try {
-    const { userId, targetId, type, voteType } = req.body;
-    
-    
+    const { userId, targetId, type, voteType } = req.body;   
     if (!userId) console.log('Missing userId');
     if (!targetId) console.log('Missing targetId');
     if (!type) console.log('Missing type');
@@ -39,7 +36,7 @@ router.post('/', async (req, res) => {
       voteType,
       timestamp: Date.now()
     };
-    
+
     console.log('Attempting to add vote to queue:', vote);
     const success = await addToVoteQueue(vote);
     
@@ -62,8 +59,7 @@ router.put("/:id/question/vote", async (req, res) => {
     
     if (!userId || !voteType) {
       return res.status(400).json({ message: 'Missing userId or voteType' });
-    }
-    
+    }   
     const vote = {
       targetId,
       type: 'question', 
@@ -85,6 +81,7 @@ router.put("/:id/question/vote", async (req, res) => {
   }
 });
 
+
 router.put("/:id/answer/vote", async (req, res) => {
   try {
     const { userId, voteType } = req.body;
@@ -92,18 +89,15 @@ router.put("/:id/answer/vote", async (req, res) => {
     
     if (!userId || !voteType) {
       return res.status(400).json({ message: 'Missing userId or voteType' });
-    }
-    
+    }   
     const vote = {
       targetId,
       type: 'answer',
       voteType,
       userId,
       timestamp: Date.now()
-    };
-    
-    const success = await addToVoteQueue(vote);
-    
+    };   
+    const success = await addToVoteQueue(vote);    
     if (success) {
       res.status(202).json({ message: "Vote queued for processing." });
     } else {
