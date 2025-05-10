@@ -6,7 +6,6 @@ const { validateRefreshToken } = require('../middlewares/validationMiddleware');
 
 const router = express.Router();
 
-// Google OAuth routes with rate limiting
 router.get('/google',
   googleAuthLimiter,
   passport.authenticate('google', { scope: ['profile', 'email'] })
@@ -18,10 +17,8 @@ router.get('/google/callback',
   (req, res) => {
     try {
       const { token, user } = req.user;
-      // Decode the token to get user ID
       const decodedToken = verifyToken(token.accessToken);
 
-      // Log tokens and user ID to console
       console.log('\n=== Authentication Details ===');
       console.log('User ID:', decodedToken.userId);
       console.log('Access Token:', token.accessToken);
@@ -36,7 +33,6 @@ router.get('/google/callback',
   }
 );
 
-// Refresh token endpoint with rate limiting
 router.post('/token/refresh',
   authLimiter,
   validateRefreshToken,
@@ -51,7 +47,6 @@ router.post('/token/refresh',
   }
 );
 
-// Verify token endpoint with rate limiting
 router.get('/verify-token',
   authLimiter,
   (req, res) => {
@@ -70,12 +65,10 @@ router.get('/verify-token',
   }
 );
 
-// Google failure route
 router.get('/google/failure', (req, res) => {
   res.status(401).json({ error: 'Google authentication failed' });
 });
 
-// Logout
 router.post('/logout', (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });

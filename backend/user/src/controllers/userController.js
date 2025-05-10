@@ -1,5 +1,4 @@
 const User = require('../models/userModel');
-const { validateEmail } = require('../utils/validationUtils');
 
 exports.createUser = async (req, res) => {
   try {
@@ -8,10 +7,6 @@ exports.createUser = async (req, res) => {
     // Validate input
     if (!name || !email || !googleId) {
       return res.status(400).json({ error: 'Name, email, and googleId are required' });
-    }
-
-    if (!validateEmail(email)) {
-      return res.status(400).json({ error: 'Invalid email format' });
     }
 
     // Check if user already exists
@@ -90,9 +85,6 @@ exports.updateUser = async (req, res) => {
     }
 
     if (email) {
-      if (!validateEmail(email)) {
-        return res.status(400).json({ error: 'Invalid email format' });
-      }
       updates.email = email.toLowerCase();
     }
 
@@ -137,36 +129,6 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
-    }
-
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    // Update last login
-    await user.updateLastLogin();
-
-    // Return user data without password
-    const userData = user.toJSON();
-    res.status(200).json(userData);
-  } catch (error) {
-    console.error("Error in loginUser:", error);
-    res.status(500).json({ error: 'Login failed' });
-  }
-};
-
 exports.getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select('-password');
@@ -185,33 +147,3 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-// exports.updateProfile = async (req, res) => {
-//   try {
-//     const userId = req.user.userId;
-//     const { name, email } = req.body;
-//     const user = await User.findById(userId);
-//     if (!user) {
-//       return res.status(404).json({ error: 'User not found' });
-//     }
-//     user.name = name || user.name;
-//     user.email = email || user.email;
-//     await user.save();
-//     res.status(200).json(user);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// exports.deleteProfile = async (req, res) => {
-//   try {
-//     const userId = req.user.userId;
-//     const user = await User.findByIdAndDelete(userId);
-//     if (!user) {
-//       return res.status(404).json({ error: 'User not found' });
-//     }
-//     res.status(200).json({ message: 'User deleted successfully' });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };

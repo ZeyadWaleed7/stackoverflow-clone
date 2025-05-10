@@ -14,7 +14,6 @@ const { authenticateJWT } = require('../middlewares/authMiddleware');
 
 router.get('/userprofile', authenticateJWT, getUserProfile);
 
-// User CRUD operations
 router.post('/', createUser);
 router.get('/', getAllUsers);
 router.get('/:id', authenticateJWT, getUserById);

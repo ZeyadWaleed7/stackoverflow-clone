@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const generateToken = (userId, name, isRefreshToken = false) => {
   const secret = isRefreshToken ? process.env.JWT_REFRESH_SECRET : process.env.JWT_SECRET;
-  const expiresIn = isRefreshToken ? '7d' : '1h'; // Refresh token lasts 7 days, access token 1 hour
+  const expiresIn = isRefreshToken ? '7d' : '1h'; // Refresh token 7 days, access token 1 hour
 
   return jwt.sign(
     {

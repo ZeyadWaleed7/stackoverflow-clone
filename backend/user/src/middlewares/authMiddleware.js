@@ -10,7 +10,6 @@ const authenticateJWT = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Verify token type
     if (decoded.type !== 'access') {
       return res.status(401).json({ error: 'Invalid token type. Access token required.' });
     }

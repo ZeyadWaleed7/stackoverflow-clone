@@ -31,7 +31,7 @@ passport.use(new GoogleStrategy({
     const tokens = {
       accessToken: generateToken(user._id, user.name),
       refreshToken: generateToken(user._id, user.name, true), // true indicates it's a refresh token
-      userImage: user.image // Include user image in the response
+      userImage: user.image
     };
 
     return done(null, { token: tokens, user });

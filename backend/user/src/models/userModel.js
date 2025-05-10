@@ -8,14 +8,7 @@ const UserSchema = new mongoose.Schema({
   bio: { type: String },
   reputation: { type: Number, default: 0 },
   lastLogin: { type: Date, default: Date.now },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-});
-
-// Update the updatedAt timestamp before saving
-UserSchema.pre('save', function (next) {
-  this.updatedAt = Date.now();
-  next();
+  createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('User', UserSchema, 'users');
