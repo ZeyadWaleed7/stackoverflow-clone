@@ -13,6 +13,9 @@ services:
       - USER_SERVICE_URL=http://user-service:5001
       - QA_SERVICE_URL=http://qa-service:8083
       - VOTE_SERVICE_URL=http://vote-service:8084
+      - SEARCH_SERVICE_URL=http://search-service:5002
+      - ELASTICSEARCH_URL=http://localhost:9200
+      - RABBITMQ_URL=amqp://localhost
       - FRONTEND_URL=http://localhost:5173
     depends_on:
       - redis
