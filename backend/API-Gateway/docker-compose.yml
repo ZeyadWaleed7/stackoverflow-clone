@@ -13,6 +13,7 @@ services:
       - USER_SERVICE_URL=http://user-service:5001
       - QA_SERVICE_URL=http://qa-service:8083
       - VOTE_SERVICE_URL=http://vote-service:8084
+      - FRONTEND_URL=http://localhost:5173
     depends_on:
       - redis
       - auth-service
@@ -31,6 +32,11 @@ services:
       - PORT=5000
       - JWT_SECRET=ff08c538111579e6c1408a01fae062b4474b2f35affc64dcc3c2f3f58ef03de9
       - MONGO_URI=mongodb://mongo:27017/stackoverflow-auth
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - CALLBACK_URL=http://localhost:8080/auth/google/callback
+      - USER_SERVICE_URL=http://user-service:5001
+      - FRONTEND_URL=http://localhost:5173
     depends_on:
       - mongo
     networks:
