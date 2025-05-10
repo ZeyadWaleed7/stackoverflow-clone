@@ -7,16 +7,9 @@ const {
   getQuestionById,
   getAllQuestions,
   updateQuestion,
-  deleteQuestion,
-  getCache,
-  postCache,
-  getAllCachedQuestions
+  deleteQuestion
 } = require('../controllers/questionsControllers');
 
-///cache route before any parameterized routes
-router.get('/cache', getAllCachedQuestions);
-router.get('/cache/:key', getCache);
-router.post('/cache', postCache);
 
 router.post('/', createQuestion);
 router.post('/:questionId/answers', addAnswerToQuestion);

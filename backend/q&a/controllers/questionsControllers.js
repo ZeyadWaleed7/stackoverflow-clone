@@ -87,24 +87,6 @@ exports.getQuestionById = async (req, res) => {
   }
 };
 
-// exports.getAllQuestions = async (req, res) => {
-//   try {
-//     const cacheKey = 'all_questions';
-//     const cachedQuestions = await cacheService.getCachedQuestionsList(cacheKey);
-    
-//     if (cachedQuestions) {
-//       console.log('[CACHE] HIT for all questions');
-//       return res.status(200).json(cachedQuestions);
-//     }
-
-//     const questions = await Question.find().populate('answers.content comments.content');
-//     await cacheService.cacheQuestionsList(cacheKey, questions);
-//     res.status(200).json(questions);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
 exports.getAllQuestions = async (req, res) => {
   try {
     const cacheKey = 'all_questions';
@@ -116,7 +98,7 @@ exports.getAllQuestions = async (req, res) => {
     }
 
     const questions = await Question.find().populate('answers comments');
-    await cacheService.cacheQuestionsList(cacheKey, questions); // No manual TTL here
+    await cacheService.cacheQuestionsList(cacheKey, questions); 
     res.status(200).json(questions);
   } catch (error) {
     console.error('Error in getAllQuestions:', error);
@@ -131,7 +113,7 @@ exports.updateQuestion = async (req, res) => {
     if (!question) {
       return res.status(404).json({ error: 'Question not found' });
     }
-    await cacheService.invalidateQuestionCache(questionId); // Invalidate cache
+    await cacheService.invalidateQuestionCache(questionId); 
     res.status(200).json(question);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -157,39 +139,39 @@ exports.deleteQuestion = async (req, res) => {
   }
 };
 
-exports.getCache = async (req, res) => {
-  try {
-    const { key } = req.params;
-    const cached = await cacheService.getCachedContent(key);
+// exports.getCache = async (req, res) => {
+//   try {
+//     const { key } = req.params;
+//     const cached = await cacheService.getCachedContent(key);
 
-    if (cached) {
-      res.status(200).json(cached);
-    } else {
-      res.status(404).json({ error: 'Cache not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//     if (cached) {
+//       res.status(200).json(cached);
+//     } else {
+//       res.status(404).json({ error: 'Cache not found' });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
-exports.postCache = async (req, res) => {
-  try {
-    const { key, data } = req.body;
-    await cacheService.cacheContent(key, data);
-    res.status(200).json({ message: 'Cache stored successfully' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+// exports.postCache = async (req, res) => {
+//   try {
+//     const { key, data } = req.body;
+//     await cacheService.cacheContent(key, data);
+//     res.status(200).json({ message: 'Cache stored successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
-exports.getAllCachedQuestions = async (req, res) => {
-  try {
-    const cachedQuestions = await cacheService.getAllCachedContent();
-    res.status(200).json(cachedQuestions);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+// exports.getAllCachedQuestions = async (req, res) => {
+//   try {
+//     const cachedQuestions = await cacheService.getAllCachedContent();
+//     res.status(200).json(cachedQuestions);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 // {
 //   "key": "test",
