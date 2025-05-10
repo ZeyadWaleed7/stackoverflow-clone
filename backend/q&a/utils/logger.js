@@ -18,11 +18,11 @@ const logger = createLogger({
     new transports.File({ 
       filename: 'logs/error.log', 
       level: 'error',
-      maxsize: 5242880 // 5MB
+      maxsize: 5242880 
     }),
     new transports.File({ 
       filename: 'logs/combined.log',
-      maxsize: 5242880 // 5MB
+      maxsize: 5242880 
     })
   ],
   exceptionHandlers: [
