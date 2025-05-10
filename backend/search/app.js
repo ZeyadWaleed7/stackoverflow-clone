@@ -4,7 +4,7 @@ const { connectRabbitMQ } = require('./config/rabbitMQ');
 const { handleQuestionEvent } = require('./controllers/searchController');
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5002;
 
 app.use(express.json());
 app.use('/api/search', searchRoutes);
