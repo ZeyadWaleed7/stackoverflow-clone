@@ -263,14 +263,14 @@ app.post('/questions', validateToken, rateLimiter(5, 60), forwardToService(QA_SE
 app.put('/questions/:id', validateToken, forwardToService(QA_SERVICE_URL));
 app.delete('/questions/:id', validateToken, forwardToService(QA_SERVICE_URL));
 
-app.get('/questions/:id/answers', forwardToService(QA_SERVICE_URL));
-app.post('/questions/:id/answers', validateToken, rateLimiter(10, 60), forwardToService(QA_SERVICE_URL));
+// app.get('/questions/:id/answers', forwardToService(QA_SERVICE_URL));
+app.post('/answers', validateToken, rateLimiter(10, 60), forwardToService(QA_SERVICE_URL));
 app.put('/answers/:id', validateToken, forwardToService(QA_SERVICE_URL));
 app.delete('/answers/:id', validateToken, forwardToService(QA_SERVICE_URL));
 
 app.post('/comments', validateToken, forwardToService(QA_SERVICE_URL));
-app.get('/comments/question/:questionId', forwardToService(QA_SERVICE_URL));
-app.get('/comments/answer/:answerId', forwardToService(QA_SERVICE_URL));
+// app.get('/comments/question/:questionId', forwardToService(QA_SERVICE_URL));
+// app.get('/comments/answer/:answerId', forwardToService(QA_SERVICE_URL));
 app.delete('/comments/:id', validateToken, forwardToService(QA_SERVICE_URL));
 
 app.post('/votes/question/:id', validateToken, rateLimiter(20, 60), forwardToService(VOTE_SERVICE_URL));
